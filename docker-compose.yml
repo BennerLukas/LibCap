@@ -1,0 +1,26 @@
+services:
+  web:
+    build: ./WebFrontend/.
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+      - memcached
+    restart: on-failure
+
+
+  database:
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_PASSWORD=1234
+    image: 'postgres:14.1'
+    restart: always
+
+  memcached:
+    image: 'memcached'
+    ports:
+      - '11211:11211'
+    restart: always
+
+
