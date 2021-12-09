@@ -1,34 +1,50 @@
-#include <ctime>
-#include <iostream>
+//#include <ctime>
+// #include <iostream>
 
 #define SENSOR_PIN 12
-#define LED_PIN 14
+#define RED_LED 14
+#define GREEN_LED 13
 
-using namespace std;
+// using namespace std;
 
 int id = 1; // ID of the microcontroller -> given by the parent system
 bool previous_state = LOW;
 bool occupied = false;
+boolean state = false;
 
 void setup() {
 
   Serial.begin(9600); // init serial communication at 9600 bits/s
   pinMode(SENSOR_PIN, INPUT);
-  pinMode(LED_PIN, OUTPUT);
+  pinMode(RED_LED, OUTPUT);
+  pinMode(GREEN_LED, OUTPUT);
 
-  led_activate(LED_PIN);
+  Serial.println("Init Programm");
+  led_activate(RED_LED);
+  led_activate(GREEN_LED);
+  delay(10000);
+  led_deactivate(RED_LED);
+  led_deactivate(GREEN_LED);
+
 }
 
 void loop() {
   delay(100);
 
   // get occupied status
-
+  
   // set LED according to occupied status
-
+  if (occupied == true){
+      led_activate(RED_LED);
+      led_deactivate(RED_LED);
+  }
+  else{
+    led_activate(GREEN_LED);
+    led_deactivate(GREEN_LED);
+  }
 
   // get sensor state
-  boolean state = digitalRead(SENSOR_PIN);
+  state = digitalRead(SENSOR_PIN);
 
   // continue if no status change
   if (state == previous_state) {
