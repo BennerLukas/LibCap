@@ -12,7 +12,6 @@ const char* ssid = "Alpha-II-239";//"Kaer Morhen";
 const char* password = "51361007935680578489"; //"3Hexerhexen";
 
 // Add your MQTT Broker IP address, example:
-//const char* mqtt_server = "192.168.1.144";
 const char* mqtt_server = "192.168.170.68";
 
 const char* pub_topic = "lib-cap/state/1";
@@ -98,7 +97,7 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("ESP8266Client")) {
+    if (client.connect("ESP32Client")) {    // ESP8266Client
       Serial.println("connected");
       // Subscribe
       client.subscribe(sub_topic);
