@@ -10,20 +10,17 @@
 
 	<!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../static/css/bootstrap.css">
-	<!-- Icons -->
+	<!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/custom_styles.css">
+    <!-- Icons -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Round">
-
-
-    </style>
-
-
 
 </head>
 <body>
 
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/">LibCap</a>
+    <a class="navbar-brand col-md-2 col-lg-2 me-0 px-3" href="/">LibCap</a>
     <button class="navbar-toggler position-sticky d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -45,54 +42,62 @@
 
 <div class="container-fluid">
     <div class="row">
-        <nav id="sidebarMenu" class="col-md-2 col-lg-1-5 d-md-block bg-light sidebar collapse">
+        <nav id="sidebarMenu" class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse">
             <div class="position-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         {% if request.path == '/' %}
-                        <a href="/" class="nav-link active py-3 border-bottom" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right"" href="/">
+                        <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right" href="/">
                             {% else %}
                             <a href="/" class="nav-link active py-3 border-bottom" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
                                 {% endif %}
-                                <div>
-									<span class="material-icons-round" style="width:auto; height:auto;">home</span>
-									Home
+                                <div style="vertical-align: middle;">
+                                    <span>
+                                        <span class="material-icons-round material-icons" style="width:auto; height:auto;">home</span>
+                                        Home
+                                    </span>
 								</div>
                             </a>
                     </li>
                     <li class="nav-item">
                         {% if request.path == '/dashboard' %}
-                        <a href="/dashboard" class="nav-link active py-3 border-bottom" aria-current="page" title="Auslastung" data-bs-toggle="tooltip" data-bs-placement="right"" href="/">
+                        <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Auslastung" data-bs-toggle="tooltip" data-bs-placement="right" href="/">
                             {% else %}
                             <a href="/dashboard" class="nav-link active py-3 border-bottom" aria-current="page" title="Auslastung" data-bs-toggle="tooltip" data-bs-placement="right">
                                 {% endif %}
-                                <div>
-									<span class="material-icons-round" style="width:auto; height:auto;">analytics</span>
-									Auslastung
+                                <div style="vertical-align: middle;">
+                                    <span>
+                                        <span class="material-icons-round material-icons" style="width:auto; height:auto;">table_restaurant</span>
+                                        Auslastung
+                                    </span>
 								</div>
                             </a>
                     </li>
                     <li class="nav-item">
                         {% if request.path == '/reservierung' %}
-                        <a href="/reservierung" class="nav-link active py-3 border-bottom" aria-current="page" title="Reservierung" data-bs-toggle="tooltip" data-bs-placement="right"" href="/">
+                        <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Reservierung" data-bs-toggle="tooltip" data-bs-placement="right" href="/">
                             {% else %}
                             <a href="/reservierung" class="nav-link active py-3 border-bottom" aria-current="page" title="Reservierung" data-bs-toggle="tooltip" data-bs-placement="right">
                                 {% endif %}
-                                <div>
-									<span class="material-icons-round" style="width:auto; height:auto;">bookmark_added</span>
-									Reservierung
+                                <div style="vertical-align: middle;">
+                                    <span>
+                                        <span class="material-icons-round material-icons" style="width:auto; height:auto;">bookmark_added</span>
+                                        Reservierung
+                                    </span>
 								</div>
                         </a>
                     </li>
                     <li class="nav-item">
-                        {% if request.path == '/profile' %}
-                        <a href="/profile" class="nav-link active py-3 border-bottom" aria-current="page" title="Profil" data-bs-toggle="tooltip" data-bs-placement="right"" href="/">
+                        {% if request.path == '/reservierung' %}
+                        <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Controller hinzufügen" data-bs-toggle="tooltip" data-bs-placement="right">
                             {% else %}
-                            <a href="/profile" class="nav-link active py-3 border-bottom" aria-current="page" title="Profil" data-bs-toggle="tooltip" data-bs-placement="right">
+                            <a href="/reservierung" class="nav-link active py-3 border-bottom" aria-current="page" title="Controller hinzufügen" data-bs-toggle="tooltip" data-bs-placement="right">
                                 {% endif %}
-                                <div>
-									<span class="material-icons-round" style="width:auto; height:auto;">manage_accounts</span>
-									Profil
+                                <div style="vertical-align: middle;">
+                                    <span>
+                                        <span class="material-icons-round material-icons" style="width:auto; height:auto;">build</span>
+                                        Controller hinzufügen
+                                    </span>
 								</div>
                         </a>
                     </li>
@@ -100,20 +105,17 @@
             </div>
         </nav>
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h2 class="h2">{% block heading %}{% endblock %}</h2>
-            </div>
-            <!-- Body -->
-            {% block body %}
-            {% endblock %}
+        <main class="row col-md-10 ms-sm-auto col-lg-10 px-md-4">
+                <div class="row col-12 pt-3">
+                    <h2 class="h2">{% block heading %}{% endblock %}</h2>
+                </div>
+                <!-- Body -->
+                <div class="row col-12 pt-3">
+                    {% block body %}
+                    {% endblock %}
+                <div>
         </main>
     </div>
-    <!--    <div>-->
-    <!--        <footer class="footer">-->
-    <!--            <p>© 2021 Biblio</p>-->
-    <!--        </footer>-->
-    <!--    </div>-->
 </div>
 
 
