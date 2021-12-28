@@ -37,7 +37,7 @@ void setup() {
   delay(1000);
   digitalWrite(RED_LED, LOW);
   digitalWrite(GREEN_LED, LOW);
-  
+
   Serial.println("Init Finished");
 }
 
@@ -47,10 +47,10 @@ void onConnectionEstablished()
   Serial.println("connected to mqtt\n");    //lambda payload: payload....
   client.subscribe("/lib-cap/occupied/1", [](const String & payload) {
     Serial.println(payload);
-    if (payload=="true"){
+    if (payload == "true") {
       occupied = true;
     }
-    else{
+    else {
       occupied = false;
     }
     Serial.println(occupied);
@@ -64,37 +64,34 @@ void loop() {
   delay(1000);
   Serial.print(".");
   // get occupied status
-  
+
   // set LED according to occupied status
-  if (occupied == true){
-      digitalWrite(RED_LED, HIGH);
-      digitalWrite(GREEN_LED, LOW);
+  if (occupied == true) {
+    digitalWrite(RED_LED, HIGH);
+    digitalWrite(GREEN_LED, LOW);
   }
-  else{
+  else {
     digitalWrite(GREEN_LED, HIGH);
     digitalWrite(RED_LED, LOW);
   }
 
   // get sensor state
   state = digitalRead(SENSOR_PIN);
-  
-  // continue if no status change
-  if (state == previous_state) {
-    loop(); // equal to continue;
-  }
 
-  // potential status change to "occupied"
-  if (state == HIGH && previous_state == LOW) {
-    Serial.println("Status Change: Low -> High - Motion");
-    client.publish("/lib-cap/state/1", "Status Change: Low -> High - Motion");
-  }
-  
-  // status change to "not occupied"
-  else if (state == LOW && previous_state == HIGH) {
-    Serial.println("Status Change: High -> Low - No Motion");
-    client.publish("/lib-cap/state/1", "Status Change: High -> Low - No Motion");
+  // continue if no status change
+  if (state != previous_state) {
+    // potential status change to "occupied"
+    if (state == HIGH && previous_state == LOW) {
+      Serial.println("Status Change: Low -> High - Motion");
+      client.publish("/lib-cap/state/1", "Status Change: Low -> High - Motion");
+    }
+    // status change to "not occupied"
+    else if (state == LOW && previous_state == HIGH) {
+      Serial.println("Status Change: High -> Low - No Motion");
+      client.publish("/lib-cap/state/1", "Status Change: High -> Low - No Motion");
+    }
   }
 
   // set current state to previous
-  previous_state = state;  
+  previous_state = state;
 }

@@ -43,8 +43,9 @@ client.loop_start()
 
 client.subscribe("/lib-cap/state/1")
 while connected is not True or message_received is not True:
+    client.publish("/lib-cap/occupied/1", "true")
     time.sleep(0.2)
-
+    client.publish("/lib-cap/occupied/1", "false")
 client.loop_forever()
 
 
