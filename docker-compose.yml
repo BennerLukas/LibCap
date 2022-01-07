@@ -8,7 +8,6 @@ services:
       - memcached
     restart: on-failure
 
-
   database:
     ports:
       - '5432:5432'
