@@ -2,13 +2,13 @@ CREATE TABLE IF NOT EXISTS user (
   username  varchar(45)     NOT NULL,
   password  varchar(450)    NOT NULL,
   PRIMARY KEY (username)
-)
+);
 
 CREATE TABLE IF NOT EXISTS status(
     n_status_id     SERIAL,
     s_status_name   VARCHAR(20),
     PRIMARY KEY (n_status_id)
-)
+);
 
 CREATE TABLE IF NOT EXISTS objects (
     n_object_id SERIAL              NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS objects (
     n_status_id             INT     NOT NULL    DEFAULT 0,
     PRIMARY KEY (n_object_id),
     FOREIGN KEY (n_status_id) REFERENCES status (n_status_id)
-)
+);
 
 CREATE TABLE IF NOT EXISTS status_changes (
     n_id            SERIAL      NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS status_changes (
     PRIMARY KEY (n_id),
     FOREIGN KEY (n_object_id) REFERENCES objects (n_object_id),
     FOREIGN KEY (n_status_id) REFERENCES status (n_status_id)
-)
+);
 
 create or replace procedure change_status(
     object_id INT,
