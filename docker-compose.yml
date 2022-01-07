@@ -1,6 +1,6 @@
 services:
   web:
-    build: ./WebFrontend/.
+    build: src/LibCap/WebFrontend/.
     ports:
       - "5000:5000"
     depends_on:

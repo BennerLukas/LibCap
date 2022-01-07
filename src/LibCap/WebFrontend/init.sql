@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS objects (
     n_grid_coordinate_x     FLOAT,
     n_grid_coordinate_y     FLOAT,
     n_grid_coordinate_z     FLOAT,
-    arr_equipment           VARCHAR []
+    arr_equipment           VARCHAR [],
     n_status_id             INT     NOT NULL    DEFAULT 0,
     PRIMARY KEY (n_object_id),
     FOREIGN KEY (n_status_id) REFERENCES status (n_status_id)
