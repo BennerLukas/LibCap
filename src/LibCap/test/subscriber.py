@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 import time
 
-broker_ip = "192.168.170.68"
+broker_ip = "192.168.4.254"
 connected = False
 message_received = False
 message = ""
@@ -43,8 +43,9 @@ client.loop_start()
 
 client.subscribe("/lib-cap/state/1")
 while connected is not True or message_received is not True:
+    time.sleep(2)
     client.publish("/lib-cap/occupied/1", "true")
-    time.sleep(0.2)
+    time.sleep(2)
     client.publish("/lib-cap/occupied/1", "false")
 client.loop_forever()
 
