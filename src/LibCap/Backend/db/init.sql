@@ -47,20 +47,6 @@ CREATE TABLE STATUS_HISTORY (
     FOREIGN KEY (n_status_id) REFERENCES CURRENT_STATUS (n_status_id)
 );
 
-CREATE OR REPLACE PROCEDURE change_status (object_id int, status int, change_time timestamp)
-LANGUAGE plpgsql
-AS '
-BEGIN
-    UPDATE
-        OBJECTS
-    SET
-        n_status_id = status
-    WHERE
-        n_object_id = object_id;
-    INSERT INTO STATUS_HISTORY (n_object_id, n_status_id, ts_timestamp)
-        VALUES (object_id, status, change_time);
-END;
-';
 
 CREATE OR REPLACE FUNCTION update_timestamp()
 RETURNS TRIGGER AS $$
@@ -89,10 +75,6 @@ CREATE TRIGGER change_tracker AFTER UPDATE
     track_changes();
 
 
-/* 
-- Trigger to create history
-- Trigger to update last_change timestamp
- */
 INSERT INTO CURRENT_STATUS (s_status_name)
     VALUES ('Free'), ('Occupied'), ('Grace Period');
 
