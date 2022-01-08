@@ -89,12 +89,12 @@ void loop() {
     // potential status change to "occupied"
     if (state == HIGH && previous_state == LOW) {
       Serial.println("\nStatus Change: Low -> High - Motion");
-      client.publish(pub_topic, "Status Change: Low -> High - Motion");
+      client.publish(pub_topic, "1");
     }
     // status change to "not occupied"
     else if (state == LOW && previous_state == HIGH) {
       Serial.println("\nStatus Change: High -> Low - No Motion");
-      client.publish(pub_topic, "Status Change: High -> Low - No Motion");
+      client.publish(pub_topic, "0");
     }
   }
 
