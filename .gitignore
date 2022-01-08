@@ -1,3 +1,5 @@
 .vscode
 /src/LibCap.egg-info/
 /env
+*__pycache__/
+
