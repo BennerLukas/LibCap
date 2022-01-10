@@ -50,8 +50,8 @@ def interpret_payload(message,topic):
         #no motion detected
         # on low signal -> turn on deadmanswitch (5 min timestamp?)
         status = engine.execute('SELECT n_status_id FROM OBJECTS WHERE n_object_id= %s ;' %(entity_id)).fetchall()
-        print(status)
-        if status[0] == 2 or status[0] == 3:
+        print("Current status: ",status[0][0])
+        if status[0][0] == 1 or status[0][0] == 3:
             print("Entity already free")
         else:
             status_grace_period(entity_id)
