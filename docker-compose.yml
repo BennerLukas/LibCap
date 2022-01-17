@@ -15,11 +15,28 @@ services:
       - POSTGRES_PASSWORD=1234
     image: 'postgres:14.1'
     restart: always
+    volumes:
+      - ./src/LibCap/WebFrontend/init_2.sql:/docker-entrypoint-initdb.d/init.sql
 
   memcached:
     image: 'memcached'
     ports:
       - '11211:11211'
+    restart: always
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8000:8080
+    depends_on:
+      - database
+
+  mosquitto:
+    image: 'toke/mosquitto'
+    ports:
+      - '1883:1883'
+      - '9001:9001'
     restart: always
 
 

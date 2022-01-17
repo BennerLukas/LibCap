@@ -2,8 +2,43 @@
 {% block title %}Home{% endblock %}
 {% block heading %}Auslastungsübersicht{% endblock %}
 {% block body %}
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div>
-    Hello World
+     <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Momentane Belegung</h5>
+
+              <!-- Pie Chart -->
+              <canvas id="pieChart" style="max-height: 400px;"></canvas>
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new Chart(document.querySelector('#pieChart'), {
+                    type: 'pie',
+                    data: {
+                      labels: [
+                        'Frei',
+                        'Belegt',
+                        'Reserviert'
+                      ],
+                      datasets: [{
+                        label: 'My First Dataset',
+                        data: {{ auslastungs_liste }},
+                        backgroundColor: [
+                          'rgb(78,161,76)',
+                          'rgb(162,83,57)',
+                          'rgb(230,229,69)'
+                        ],
+                        hoverOffset: 4
+                      }]
+                    }
+                  });
+                });
+              </script>
+              <!-- End Pie CHart -->
+
+            </div>
+          </div>
+        </div>
 </div>
 {% endblock %}

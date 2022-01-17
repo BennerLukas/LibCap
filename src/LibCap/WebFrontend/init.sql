@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS user (
 );
 
 CREATE TABLE IF NOT EXISTS status(
-    n_status_id     SERIAL,
+    n_status_id     INT NOT NULL,
     s_status_name   VARCHAR(20),
     PRIMARY KEY (n_status_id)
 );
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS objects (
     n_grid_coordinate_y     FLOAT,
     n_grid_coordinate_z     FLOAT,
     arr_equipment           VARCHAR [],
-    n_status_id             INT     NOT NULL    DEFAULT 0,
+    n_status_id             INT     NOT NULL    DEFAULT 1,
     PRIMARY KEY (n_object_id),
     FOREIGN KEY (n_status_id) REFERENCES status (n_status_id)
 );
@@ -46,7 +46,18 @@ BEGIN
     WHERE n_object_id = object_id;
 
     INSERT INTO status_changes (n_object_id, n_status_id, ts_timestamp)
-    VALUES (object_id, status, change_time)
+    VALUES (object_id, status, change_time);
 END;
 $$
 ;
+
+INSERT INTO status(n_status_id, s_status_name)
+VALUES (1,'frei');
+INSERT INTO status(n_status_id, s_status_name)
+VALUES (2,'belegt');
+INSERT INTO status(n_status_id, s_status_name)
+VALUES (3,'reserviert');
+INSERT INTO status(n_status_id, s_status_name)
+VALUES (4,'anderes');
+INSERT INTO user(username, password)
+VALUES ('admin', 'admin');

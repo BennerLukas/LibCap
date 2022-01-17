@@ -18,9 +18,12 @@
 
 </head>
 <body>
-
+<script src="../static/js/bootstrap.bundle.js"></script>
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-2 col-lg-2 me-0 px-3" href="/">LibCap</a>
+    <span>
+        <img src="../static/imgs/logo_basic.png" style="height: 24px; width: 24px;">
+        <a class="navbar-brand col-md-2 col-lg-2 me-0 px-3" href="/">LibCap</a>
+    </span>
     <button class="navbar-toggler position-sticky d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -32,9 +35,19 @@
         </li>
         <li class="nav-item text-nowrap">
             {% if is_logged_in == 'logged_in' %}
-            <a class="nav-link" href="/logout">Sign Out</a>
+             <div style="vertical-align: middle;">
+                <span>
+                    <span class="material-icons">logout</span>
+                    <a class="nav-link" href="/logout">Sign Out</a>
+                </span>
+             </div>
             {% else %}
-            <a class="nav-link" href="/login">Sign In</a>
+            <div style="vertical-align: middle;">
+                <span>
+                    <span class="material-icons">login</span>
+                    <a class="nav-link" href="/login">Sign In</a>
+                </span>
+            </div>
             {% endif %}
         </li>
     </ul>
@@ -54,7 +67,7 @@
                                 <div style="vertical-align: middle;">
                                     <span>
                                         <span class="material-icons-round material-icons" style="width:auto; height:auto;">home</span>
-                                        Home
+                                        Übersicht
                                     </span>
 								</div>
                             </a>
@@ -68,7 +81,7 @@
                                 <div style="vertical-align: middle;">
                                     <span>
                                         <span class="material-icons-round material-icons" style="width:auto; height:auto;">table_restaurant</span>
-                                        Auslastung
+                                        Sitzplatzübersicht
                                     </span>
 								</div>
                             </a>
@@ -88,10 +101,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        {% if request.path == '/reservierung' %}
+                        {% if request.path == '/add_controller' %}
                         <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Controller hinzufügen" data-bs-toggle="tooltip" data-bs-placement="right">
                             {% else %}
-                            <a href="/reservierung" class="nav-link active py-3 border-bottom" aria-current="page" title="Controller hinzufügen" data-bs-toggle="tooltip" data-bs-placement="right">
+                            <a href="/add_controller" class="nav-link active py-3 border-bottom" aria-current="page" title="Controller hinzufügen" data-bs-toggle="tooltip" data-bs-placement="right">
                                 {% endif %}
                                 <div style="vertical-align: middle;">
                                     <span>
@@ -105,27 +118,16 @@
             </div>
         </nav>
 
-        <main class="row col-md-10 ms-sm-auto col-lg-10 px-md-4">
-                <div class="row pt-3">
-                    <h2 class="h2">{% block heading %}{% endblock %}</h2>
-                </div>
-                <!-- Body -->
-                <div class="row pt-3">
-                    {% block body %}
-                    {% endblock %}
+        <main class="row col-md-10 ms-sm-auto col-lg-10 px-md-4 pt-3">
                 <div>
+                    <h2 class="h2">{% block heading %}{% endblock %}</h2>
+
+                {% block body %}
+                {% endblock %}
+                </div>
         </main>
     </div>
 </div>
-
-
-<script src="../static/js/bootstrap.bundle.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
-        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
-        integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
-        crossorigin="anonymous"></script>
 
 </body>
 </html>

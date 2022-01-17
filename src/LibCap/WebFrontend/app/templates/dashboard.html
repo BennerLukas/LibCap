@@ -3,8 +3,55 @@
 {% block heading %}Bibliothekssicht{% endblock %}
 {% block body %}
 
-<div class="">
-Hello World!
+<script>
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+})
+
+
+</script>
+
+<div>
+    <div class="table-responsive">
+        <table class="table table-sm">
+            {% for object_row in objects %}
+            <tr>
+                {% for object in object_row %}
+                <td>
+                    {% if object[5] == 1 %}
+                    <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
+                            data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5] }}
+                            data-bs-original-title= {{ object[1] }} style="background: green;">
+                            <span class="material-icons-round">chair</span>
+                    </button>
+
+                    {% elif object[5] == 2 %}
+                    <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
+                            data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5] }}
+                            data-bs-original-title= {{ object[1] }} style="background: darkred;">
+                            <span class="material-icons-round">chair</span>
+                    </button>
+                    {% elif object[5] == 3 %}
+                    <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
+                            data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5] }}
+                            data-bs-original-title= {{ object[1] }} style="background: darkgoldenrod;">
+                            <span class="material-icons-round">chair</span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
+                            data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5] }}
+                            data-bs-original-title= {{ object[1] }}>
+                                <span class="material-icons-round">chair</span>
+                    </button>
+
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>
 
 {% endblock %}

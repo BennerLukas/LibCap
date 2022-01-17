@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS LB_USER;
 DROP TABLE IF EXISTS STATUS_HISTORY;
 DROP TABLE IF EXISTS OBJECTS;
 DROP TABLE IF EXISTS CURRENT_STATUS;
+DROP TABLE IF EXISTS RESERVATIONS;
 
 
 CREATE TABLE LB_USER (
@@ -19,14 +20,15 @@ CREATE TABLE CURRENT_STATUS (
 CREATE TABLE OBJECTS (
     n_object_id SERIAL              NOT NULL,
     n_object_type           INT     NOT NULL    DEFAULT 1,
-    n_grid_coordinate_x     FLOAT,
-    n_grid_coordinate_y     FLOAT,
-    n_grid_coordinate_z     FLOAT,
+    n_grid_coordinate_x     INT,
+    n_grid_coordinate_y     INT,
+    n_grid_coordinate_z     INT,
     arr_equipment           VARCHAR [],
-    n_status_id             INT     NOT NULL    DEFAULT 0,
+    n_status_id             INT     NOT NULL    DEFAULT 1,
     PRIMARY KEY (n_object_id),
     FOREIGN KEY (n_status_id) REFERENCES CURRENT_STATUS (n_status_id)
 );
+
 
 CREATE TABLE STATUS_HISTORY (
     n_id            SERIAL      NOT NULL,
