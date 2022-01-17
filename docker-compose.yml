@@ -16,7 +16,7 @@ services:
     image: 'postgres:14.1'
     restart: always
     volumes:
-      - ./src/LibCap/WebFrontend/init_2.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./src/LibCap/Backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   memcached:
     image: 'memcached'
@@ -39,4 +39,9 @@ services:
       - '9001:9001'
     restart: always
 
+  backend:
+    build: src/LibCap/Backend/.
+    depends_on:
+      - mosquitto
+      - database
 
