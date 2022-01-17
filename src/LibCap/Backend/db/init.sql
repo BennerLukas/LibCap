@@ -47,7 +47,7 @@ CREATE TABLE STATUS_HISTORY (
     FOREIGN KEY (n_status_id) REFERENCES CURRENT_STATUS (n_status_id)
 );
 
-
+-- FUNCTIONS
 CREATE OR REPLACE FUNCTION update_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -65,7 +65,7 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
-
+-- TRIGGERS
 CREATE TRIGGER status_update BEFORE UPDATE
     ON OBJECTS FOR EACH ROW EXECUTE PROCEDURE 
     update_timestamp();
@@ -75,6 +75,7 @@ CREATE TRIGGER change_tracker AFTER UPDATE
     track_changes();
 
 
+-- INSERTS
 INSERT INTO CURRENT_STATUS (s_status_name)
     VALUES ('Free'), ('Occupied'), ('Grace Period');
 
