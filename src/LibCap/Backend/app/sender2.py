@@ -32,8 +32,17 @@ time.sleep(0.4)
 #client.loop_start()
 testnum = 0
 #client.subscribe("/lib-cap/occupied/12")
-client.publish("/lib-cap/state/1", 0)
-print("Publishing... ", 0)
+
+#for distance sensors
+message_value = 0
+client.publish("/lib-cap/state/1", message_value) #id = 1
+print("Publishing... ", message_value)
+
+
+# for distance sensors
+#client.publish("/lib-cap/state/1", 1) #id = 1
+#client.publish("/lib-cap/state/1", 0) #id = 1
+#print("Publishing... ", 10)
 testnum += 1
 
 
