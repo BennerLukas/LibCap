@@ -1,5 +1,5 @@
 .button {
-  background-color: #4CAF50; /* Green */
+  background-color: #be5555; /* Green */
   border: none;
   color: white;
   padding: 15px 32px;
@@ -24,12 +24,12 @@ body {
   border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
 }
 a {
-    color: #0060B6;
+    color: #000000;
     text-decoration: none;
 }
 a:hover
 {
-     color:#00A0C6;
+     color: #286af6;
      text-decoration:none;
      cursor:pointer;
 }
@@ -116,7 +116,7 @@ a:hover
 }
 
 .sidebar .nav-link.active {
-  color: #007bff;
+  color: #000000;
 }
 
 .sidebar .nav-link:hover .feather,
@@ -137,8 +137,8 @@ a:hover
   padding-top: .75rem;
   padding-bottom: .75rem;
   /*font-size: 1rem;*/
-  background-color: rgba(0, 0, 0, .25);
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+  /*background-color: rgba(0, 0, 0, .25);*/
+  /*box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);*/
 }
 
 .navbar .navbar-toggler {
