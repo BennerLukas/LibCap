@@ -66,14 +66,15 @@ def status_occupied(entity_id):
         
     elif int(entity[0][-2]) == 2:
         print("Status already up-to-date")
-        
+        #status_grace_period(entity_id) #toggle
     else:
         #send id to database and mark seat as occupied
         update = engine.execute("UPDATE OBJECTS SET n_status_id = 2 WHERE n_object_id = %s;" %(entity_id))
         
         #print("publishing status")
         client.publish(f"/lib-cap/occupied/{entity_id}", "true") # entity subscribes to topic with corresponding id
-
+        entity = engine.execute('SELECT * FROM OBJECTS WHERE n_object_id= %s ;' %(entity_id)).fetchall()
+        print("New state:",entity)
 
 def status_grace_period(entity_id):
     # change status of entity
@@ -88,6 +89,10 @@ def status_grace_period(entity_id):
     else:
         #send id to database and mark seat as occupied
         update = engine.execute("UPDATE OBJECTS SET n_status_id = 3 WHERE n_object_id = %s;" %(entity_id))
+        
+        # Print
+        entity = engine.execute('SELECT * FROM OBJECTS WHERE n_object_id= %s ;' %(entity_id)).fetchall()
+        print("New state:",entity)
 
 
 def check_status():
@@ -109,7 +114,7 @@ def check_status():
         if time_delta > 15: #5 * 60 sec
             status_free(entity_id)
             history = engine.execute('SELECT * FROM STATUS_HISTORY;').fetchall()
-            #print(f"history: {history}")
+            print(f"history: {history}")
   
 
 def status_free(entity_id):
@@ -127,6 +132,8 @@ def status_free(entity_id):
         # send id to database and mark seat as occupied
         update = engine.execute("UPDATE OBJECTS SET n_status_id = 1 WHERE n_object_id = %s;" %(entity_id))
         
+        entity = engine.execute('SELECT * FROM OBJECTS WHERE n_object_id= %s ;' %(entity_id)).fetchall()
+        print("New state:",entity)
         #print("publishing status")
         client.publish(f"/lib-cap/occupied/{entity_id}", "false")
 
