@@ -8,8 +8,8 @@
 #define GREEN_LED 13
 
 // Replace the next variables with your SSID/Password combination
-const char* ssid = "Alpha-II-239";//"Kaer Morhen";
-const char* password = "51361007935680578489"; //"3Hexerhexen";
+const char* ssid = "Kaer Morhen";
+const char* password = "3Hexerhexen";
 
 // Add your MQTT Broker IP address, example:
 const char* mqtt_server = "192.168.170.68";

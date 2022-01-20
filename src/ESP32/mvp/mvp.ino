@@ -9,7 +9,7 @@
 
 EspMQTTClient client(
   "Alpha-II-239",
-  "51361007935680578489",
+  "****************",
   "192.168.170.68",  // MQTT Broker server ip
   "",   // Can be omitted if not needed
   "",   // Can be omitted if not needed

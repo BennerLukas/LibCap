@@ -10,10 +10,10 @@
 const char* sub_topic = "/lib-cap/occupied/1";
 const char* pub_topic = "/lib-cap/state/1";
 const char* controler_name = "esp32-01";
-const char* broker_ip = "192.168.4.254";
-const char* wifi_name = "Kaer Morhen";
-const char* wifi_pwd = "3Hexerhexen";
-double error_correction = 0.02;
+const char* broker_ip =  "192.168.170.31"; // "192.168.4.254";
+const char* wifi_name = "Alpha-II-239";//"Kaer Morhen";
+const char* wifi_pwd = "51361007935680578489"; //"3Hexerhexen";
+double error_correction = 0.10;
 
 EspMQTTClient client(
   wifi_name,
@@ -93,7 +93,10 @@ void loop() {
     // potential status change to "occupied"
     // distance change -> movement
     Serial.println("\nDistance Change: Movement");
-    client.publish(pub_topic, "1");
+    Serial.println(distance);
+    client.publish(pub_topic, "1");   // for same behavior like motion sensor
+    delay(100);
+    client.publish(pub_topic, "0");
     delay(1000);
   }
 
