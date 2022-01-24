@@ -6,21 +6,23 @@ from app.backend_functions import Backend
 
 dbc = DatabaseConnector()
 # dbc.example_init()
-
 backend = Backend(dbc)
-
-app.secret_key = '5uY4^$u!%lWlAk%3DkM2iL9^!DtJqfyduTc4pyA1uv9JG5ud!Ew@@dsa5'
-
-@app.context_processor
-def logging_in():
-    return dict(logged_in=session.get('is_logged_in', False),
-                user=session.get('username', None))
 
 
 @app.route('/')  # Home
 def index():
-    auslastungs_liste = backend.get_auslastung()
-    return render_template("/index.html", auslastungs_liste=auslastungs_liste)
+    occupancy_rate = backend.get_auslastung()
+    ctr_occupied_workstations = 1
+    ctr_available_workstations = 1
+    ctr_maintenance_workstations = 1
+    ctr_total_workstations = 1
+    return render_template("/index.html",
+                           auslastungs_liste=occupancy_rate,
+                           ctr_occupied_workstations=ctr_occupied_workstations,
+                           ctr_available_workstations=ctr_available_workstations,
+                           ctr_maintenance_workstations=ctr_maintenance_workstations,
+                           ctr_total_workstations=ctr_total_workstations,
+                           )
 
 
 @app.route('/dashboard')

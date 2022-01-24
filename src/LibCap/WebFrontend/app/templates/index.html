@@ -174,33 +174,36 @@
 
             </div>
 
-             <!-- Pie Chart -->
-              <canvas id="pieChart" style="max-height: 400px;"></canvas>
-              <script>
+            <!-- Pie Chart -->
+            <canvas id="pieChart" style="max-height: 400px;"></canvas>
+            <script>
                 document.addEventListener("DOMContentLoaded", () => {
-                  new Chart(document.querySelector('#pieChart'), {
-                    type: 'pie',
-                    data: {
-                      labels: [
-                        'Frei',
-                        'Belegt',
-                        'Reserviert'
-                      ],
-                      datasets: [{
-                        label: 'My First Dataset',
-                        data: {{ auslastungs_liste }},
+                    new Chart(document.querySelector('#pieChart'), {
+                        type: 'pie',
+                        data: {
+                            labels: [
+                                'Frei',
+                                'Belegt',
+                                'Reserviert'
+                            ],
+                            datasets: [{
+                                label: 'My First Dataset',
+                                data: {{auslastungs_liste}
+                        },
                         backgroundColor: [
-                          'rgb(78,161,76)',
-                          'rgb(162,83,57)',
-                          'rgb(230,229,69)'
+                            'rgb(78,161,76)',
+                            'rgb(162,83,57)',
+                            'rgb(230,229,69)'
                         ],
                         hoverOffset: 4
-                      }]
                     }
-                  });
+                ]
+                }
+                })
+                    ;
                 });
-              </script>
-              <!-- End Pie CHart -->
+            </script>
+            <!-- End Pie CHart -->
 
         </div>
     </section><!-- End Services Section -->
@@ -214,7 +217,7 @@
                 <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                     <div class="count-box">
                         <i class="bi bi-person-workspace"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_total_workstations }}" data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Number of<strong>total Workstations</strong></p>
                     </div>
@@ -223,7 +226,7 @@
                 <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                     <div class="count-box">
                         <i class="bi bi-tools"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_maintenance_workstations }}" data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Number of Workstations in <strong>Maintenance</strong></p>
                     </div>
@@ -232,7 +235,7 @@
                 <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                     <div class="count-box">
                         <i class="bi bi-unlock"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="83" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_available_workstations }}" data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Number of <strong>Workstations available</strong></p>
                     </div>
@@ -241,7 +244,7 @@
                 <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                     <div class="count-box">
                         <i class="bi bi-lock"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_occupied_workstations }}" data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Number of <strong>Workstations occupied</strong></p>
                     </div>
@@ -431,7 +434,19 @@
                 </div>
             </form>
 
-
+            <script>
+                function closeMessage() {
+                    document.getElementById('close').style.display = 'none'
+                }
+            </script>
+            <div id="close" class="container">
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning">
+                    <button onclick="closeMessage()" type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </section><!-- End Testimonials Section -->
 
