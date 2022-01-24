@@ -3,6 +3,15 @@
 {% block heading %}Auslastungsübersicht{% endblock %}
 {% block body %}
 
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+
 <form action="/execute_add_controller" method="post">
     <div class="row mb-3">
         <label for="inputX" class="col-sm-2 col-form-label">X</label>
