@@ -99,7 +99,7 @@ def check_status():
     # query db for timestamp of entity
     print("Checking")
     grace_period_entities = engine.execute(
-        'SELECT * FROM OBJECTS WHERE n_status_id = 3 ORDER BY ts_last_change;').fetchall()
+        'SELECT * FROM OBJECTS WHERE n_status_id = 3 OR n_status_id = 5 ORDER BY ts_last_change;').fetchall()
     current_time = datetime.datetime.utcnow()
     for entity in grace_period_entities:
         entity_id = entity[0]

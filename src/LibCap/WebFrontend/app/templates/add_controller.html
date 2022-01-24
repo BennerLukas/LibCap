@@ -2,6 +2,19 @@
 {% block title %}Home{% endblock %}
 {% block heading %}Auslastungsübersicht{% endblock %}
 {% block body %}
+<script>
+    function closeMessage() {
+        document.getElementById('close').style.display='none'
+    }
+</script>
+<div id="close" class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button onclick="closeMessage()" type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
 
 <form action="/execute_add_controller" method="post">
     <div class="row mb-3">

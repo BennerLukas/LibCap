@@ -1,5 +1,7 @@
+import datetime
 import logging
-from flask import render_template, redirect, abort, send_file, request, session
+import werkzeug
+from flask import render_template, redirect, abort, send_file, request, session, flash
 from app import app
 from app.db_connector import DatabaseConnector
 from app.backend_functions import Backend
@@ -27,13 +29,7 @@ def index():
 
 @app.route('/dashboard')
 def dashboard():
-    objects = dbc.get_select('SELECT DISTINCT * FROM objects')
-    objects_grouped = list()
-    for y in objects.n_grid_coordinate_y.unique():
-        objects_grouped.append(objects.loc[objects['n_grid_coordinate_y'] == y].drop('n_grid_coordinate_y', axis=1) \
-                               .sort_values(by='n_grid_coordinate_x').to_numpy().tolist())
-    logging.error(objects.info())
-    logging.error(objects_grouped)
+    objects_grouped = backend.get_sitzplaetze()
     return render_template("/dashboard.html", objects=objects_grouped)
 
 
@@ -90,13 +86,25 @@ def logout():
 
 @app.route('/execute_add_controller', methods=['POST', 'GET'])
 def execute_add_controller():
+
     param_list = {"x": request.form['inputX'],
                   "y": request.form['inputY'],
                   "z": request.form['inputZ'],
                   "status": request.form['gridRadios'],
-                  "LAN": request.form['gridCheck1'],
-                  "Lampe": request.form['gridCheck2'],
-                  "Steckdose": request.form['gridCheck3'],
-                  "Drehstuhl": request.form['gridCheck4']}
+                  "LAN": request.form.get('gridCheck1', "off"),
+                  "Lampe": request.form.get('gridCheck2', "off"),
+                  "Steckdose": request.form.get('gridCheck3', "off"),
+                  "Drehstuhl": request.form.get('gridCheck4', "off")}
     new_id = backend.add_controller_to_database(param_list)
+    flash(f"Neuer Controller mit ID {new_id} hinzugefügt!")
     return redirect("/add_controller")
+
+
+@app.post('/reserve_seat')
+def reserve_seat():
+    seat_id = request.form.get('seat_id')
+    time_formatted = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    sql_string = f"UPDATE OBJECTS SET n_status_id = 5, ts_last_change='{time_formatted}' WHERE n_object_id={seat_id}"
+    dbc.execute_sql(sql_string)
+    logging.info(f"Reserved {seat_id} until {time_formatted}")
+    return redirect("/dashboard")
