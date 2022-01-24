@@ -11,6 +11,7 @@ import time
 
 class DatabaseConnector:
     def __init__(self):
+        # self.hostname = "localhost"
         self.hostname = "database"
         self.port = 5432
 
@@ -67,19 +68,19 @@ class DatabaseConnector:
             logging.error("Transaction Failed - Review given inputs! Reestablished connection to database backend")
             return False
 
-    def example_init(self):
-        status = self._check_initialisation()
-        if status is False:
-            logging.error("Executing Example Init")
-            for root, dirs, files in os.walk("/src/"):
-                if "example.sql" in files:
-                    path = os.path.join(root, "example.sql")
-            logging.info(f"Path für Example in Docker: {path}")
-            with open(path) as file:
-                sql_string = file.read()
-            self.execute_sql(sql_string)
-        else:
-            logging.error("Already initialized.")
+    # def example_init(self):
+    #     status = self._check_initialisation()
+    #     if status is False:
+    #         logging.error("Executing Example Init")
+    #         for root, dirs, files in os.walk("/src/"):
+    #             if "example.sql" in files:
+    #                 path = os.path.join(root, "example.sql")
+    #                 logging.info(f"Path für Example in Docker: {path}")
+    #         with open(path) as file:
+    #             sql_string = file.read()
+    #         self.execute_sql(sql_string)
+    #     else:
+    #         logging.error("Already initialized.")
 
     def get_select(self, sql_query: str) -> DataFrame:
         """

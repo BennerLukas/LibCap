@@ -8,6 +8,18 @@
   display: inline-block;
   /*font-size: 16px; */
 }
+
+.button2 {
+  background-color: #555;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  /*font-size: 16px; */
+}
+
 body {
   /*font-size: .875rem;*/
 }
@@ -29,7 +41,7 @@ a {
 }
 a:hover
 {
-     color: #286af6;
+     color: #be5555;
      text-decoration:none;
      cursor:pointer;
 }

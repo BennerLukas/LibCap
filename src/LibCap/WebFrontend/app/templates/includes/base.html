@@ -8,45 +8,51 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
 
-	<!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="../static/css/bootstrap.css">
-	<!-- Custom CSS -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="../static/css/custom_styles.css">
     <!-- Icons -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Round">
 
 </head>
 <body>
 <script src="../static/js/bootstrap.bundle.js"></script>
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <span>
-        <img src="../static/imgs/logo_basic.png" style="height: 24px; width: 24px;">
-        <a class="navbar-brand col-md-2 col-lg-2 me-0 px-3" href="/">LibCap</a>
+
+
+        <a class="navbar-brand col-md-2 col-lg-2 me-0 px-3" href="/">
+            <img src="../static/imgs/logo_basic.png" style="height: 35px; width: 35px;">
+            LibCap
+        </a>
+
     </span>
-    <button class="navbar-toggler position-sticky d-md-none collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-            aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <!--    <button class="navbar-toggler position-sticky d-md-none collapsed" type="button" data-bs-toggle="collapse"-->
+    <!--            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"-->
+    <!--            aria-label="Toggle navigation">-->
+    <!--        <span class="navbar-toggler-icon"></span>-->
+    <!--    </button>-->
 
     <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-        </li>
+        <!--        <li class="nav-item text-nowrap">-->
+        <!--        </li>-->
         <li class="nav-item text-nowrap">
             {% if is_logged_in == 'logged_in' %}
-             <div style="vertical-align: middle;">
-                <span>
+            <div style="vertical-align: middle;">
+
+                <a class="nav-link" href="/logout">
                     <span class="material-icons">logout</span>
-                    <a class="nav-link" href="/logout">Sign Out</a>
-                </span>
-             </div>
+                    Sign Out
+                </a>
+            </div>
             {% else %}
             <div style="vertical-align: middle;">
-                <span>
+                <a class="nav-link" href="/login">
                     <span class="material-icons">login</span>
-                    <a class="nav-link" href="/login">Sign In</a>
-                </span>
+                    Sign In
+                </a>
             </div>
             {% endif %}
         </li>
@@ -60,74 +66,87 @@
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         {% if request.path == '/' %}
-                        <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right" href="/">
+                        <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Home"
+                           data-bs-toggle="tooltip" data-bs-placement="right" href="/">
                             {% else %}
-                            <a href="/" class="nav-link active py-3 border-bottom" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+                            <a href="/" class="nav-link active py-3 border-bottom" aria-current="page" title="Home"
+                               data-bs-toggle="tooltip" data-bs-placement="right">
                                 {% endif %}
                                 <div style="vertical-align: middle;">
                                     <span>
-                                        <span class="material-icons-round material-icons" style="width:auto; height:auto;">home</span>
+                                        <span class="material-icons-round material-icons"
+                                              style="width:auto; height:auto;">home</span>
                                         Übersicht
                                     </span>
-								</div>
+                                </div>
                             </a>
                     </li>
                     <li class="nav-item">
                         {% if request.path == '/dashboard' %}
-                        <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Auslastung" data-bs-toggle="tooltip" data-bs-placement="right" href="/">
+                        <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Auslastung"
+                           data-bs-toggle="tooltip" data-bs-placement="right" href="/">
                             {% else %}
-                            <a href="/dashboard" class="nav-link active py-3 border-bottom" aria-current="page" title="Auslastung" data-bs-toggle="tooltip" data-bs-placement="right">
+                            <a href="/dashboard" class="nav-link active py-3 border-bottom" aria-current="page"
+                               title="Auslastung" data-bs-toggle="tooltip" data-bs-placement="right">
                                 {% endif %}
                                 <div style="vertical-align: middle;">
                                     <span>
-                                        <span class="material-icons-round material-icons" style="width:auto; height:auto;">table_restaurant</span>
+                                        <span class="material-icons-round material-icons"
+                                              style="width:auto; height:auto;">table_restaurant</span>
                                         Sitzplatzübersicht
                                     </span>
-								</div>
+                                </div>
                             </a>
                     </li>
                     <li class="nav-item">
                         {% if request.path == '/reservierung' %}
-                        <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Reservierung" data-bs-toggle="tooltip" data-bs-placement="right" href="/">
+                        <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Reservierung"
+                           data-bs-toggle="tooltip" data-bs-placement="right" href="/">
                             {% else %}
-                            <a href="/reservierung" class="nav-link active py-3 border-bottom" aria-current="page" title="Reservierung" data-bs-toggle="tooltip" data-bs-placement="right">
+                            <a href="/reservierung" class="nav-link active py-3 border-bottom" aria-current="page"
+                               title="Reservierung" data-bs-toggle="tooltip" data-bs-placement="right">
                                 {% endif %}
                                 <div style="vertical-align: middle;">
                                     <span>
-                                        <span class="material-icons-round material-icons" style="width:auto; height:auto;">bookmark_added</span>
+                                        <span class="material-icons-round material-icons"
+                                              style="width:auto; height:auto;">bookmark_added</span>
                                         Reservierung
                                     </span>
-								</div>
-                        </a>
+                                </div>
+                            </a>
                     </li>
                     <li class="nav-item">
                         {% if request.path == '/add_controller' %}
-                        <a class="nav-link disabled py-3 border-bottom" aria-current="page" title="Controller hinzufügen" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <a class="nav-link disabled py-3 border-bottom" aria-current="page"
+                           title="Controller hinzufügen" data-bs-toggle="tooltip" data-bs-placement="right">
                             {% else %}
-                            <a href="/add_controller" class="nav-link active py-3 border-bottom" aria-current="page" title="Controller hinzufügen" data-bs-toggle="tooltip" data-bs-placement="right">
+                            <a href="/add_controller" class="nav-link active py-3 border-bottom" aria-current="page"
+                               title="Controller hinzufügen" data-bs-toggle="tooltip" data-bs-placement="right">
                                 {% endif %}
                                 <div style="vertical-align: middle;">
                                     <span>
-                                        <span class="material-icons-round material-icons" style="width:auto; height:auto;">build</span>
+                                        <span class="material-icons-round material-icons"
+                                              style="width:auto; height:auto;">build</span>
                                         Controller hinzufügen
                                     </span>
-								</div>
-                        </a>
+                                </div>
+                            </a>
                     </li>
                 </ul>
             </div>
         </nav>
 
         <main class="row col-md-10 ms-sm-auto col-lg-10 px-md-4 pt-3">
-                <div>
-                    <h2 class="h2">{% block heading %}{% endblock %}</h2>
+            <div>
+                <h2 class="h2">{% block heading %}{% endblock %}</h2>
 
                 {% block body %}
                 {% endblock %}
-                </div>
+            </div>
         </main>
     </div>
 </div>
 
 </body>
+
 </html>

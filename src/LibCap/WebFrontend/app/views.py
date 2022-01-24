@@ -5,7 +5,7 @@ from app.db_connector import DatabaseConnector
 from app.backend_functions import Backend
 
 dbc = DatabaseConnector()
-dbc.example_init()
+# dbc.example_init()
 
 backend = Backend(dbc)
 
