@@ -102,9 +102,8 @@ def execute_add_controller():
 @app.post('/reserve_seat')
 def reserve_seat():
     seat_id = request.form.get('seat_id')
-    time = datetime.datetime.now() + datetime.timedelta(minutes=10)
-    time_formatted = time.strftime('%Y-%m-%d %H:%M:%S')
-    sql_string = f"UPDATE OBJECTS SET n_status_id = 3, ts_last_change='{time_formatted}' WHERE n_object_id={seat_id}"
+    time_formatted = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    sql_string = f"UPDATE OBJECTS SET n_status_id = 5, ts_last_change='{time_formatted}' WHERE n_object_id={seat_id}"
     dbc.execute_sql(sql_string)
     logging.info(f"Reserved {seat_id} until {time_formatted}")
     return redirect("/dashboard")
