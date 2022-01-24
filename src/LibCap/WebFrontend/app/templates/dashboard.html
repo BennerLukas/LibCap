@@ -1,16 +1,57 @@
 {% extends "includes/base.html" %}
-{% block title %}Bibliothekssicht{% endblock %}
-{% block heading %}Bibliothekssicht{% endblock %}
+{% block title %}Sitzplatzübersicht{% endblock %}
+{% block heading %}Sitzplatzübersicht{% endblock %}
 {% block body %}
 
-<script>
-    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl)
-})
+<style>
+      #tooltip {
+        background: #333;
+        color: white;
+        font-weight: bold;
+        padding: 4px 8px;
+        font-size: 13px;
+        border-radius: 4px;
+        display: none;
+      }
 
+      #tooltip[data-show] {
+        display: block;
+      }
 
-</script>
+      #arrow,
+      #arrow::before {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: inherit;
+      }
+
+      #arrow {
+        visibility: hidden;
+      }
+
+      #arrow::before {
+        visibility: visible;
+        content: '';
+        transform: rotate(45deg);
+      }
+
+      #tooltip[data-popper-placement^='top'] > #arrow {
+        bottom: -4px;
+      }
+
+      #tooltip[data-popper-placement^='bottom'] > #arrow {
+        top: -4px;
+      }
+
+      #tooltip[data-popper-placement^='left'] > #arrow {
+        right: -4px;
+      }
+
+      #tooltip[data-popper-placement^='right'] > #arrow {
+        left: -4px;
+      }
+</style>
 
 <div>
     <div class="table-responsive">
@@ -19,32 +60,99 @@
             <tr>
                 {% for object in object_row %}
                 <td>
-                    {% if object[5] == 1 %}
-                    <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
-                            data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5] }}
-                            data-bs-original-title= {{ object[1] }} style="background: green;">
-                            <span class="material-icons-round">chair</span>
+                    {% if object['n_status_id'] == 1 %}
+                    <button type="button" class="btn btn-secondary" onclick="toggleDescription({{ object['n_object_id'] }})" style="background: green;">
+                        {% if object['n_object_type'] == 1 %}
+                        <span class="material-icons-round">chair</span>
+                        {% else %}
+                        <span class="material-icons-round">check_box_outline_blank</span>
+                        {% endif %}
                     </button>
-
-                    {% elif object[5] == 2 %}
-                    <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
-                            data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5] }}
-                            data-bs-original-title= {{ object[1] }} style="background: darkred;">
-                            <span class="material-icons-round">chair</span>
+                    <div name="info_card" id="{{ object['n_object_id'] }}" class="card" style="display: none">
+                      <div class="card-header">
+                        Sitzplatz {{ object['n_object_id'] }}
+                      </div>
+                      <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Reihe: {{ object['n_grid_coordinate_y'] }}</li>
+                            <li class="list-group-item">Sitplatz: {{ object['n_grid_coordinate_x'] }}</li>
+                            <li class="list-group-item">Ausstattung: {{ object['arr_equipment'] }}</li>
+                        </ul>
+                        <form action="/reserve_seat" method="post">
+                            <button type="submit" class="btn btn-primary">Reservieren</button>
+                            <input type="text" id="{{ object['n_object_id'] }}" name="seat_id" value="{{ object['n_object_id'] }}" style="display: none">
+                        </form>
+                      </div>
+                    </div>
+                    {% elif object['n_status_id'] == 2 %}
+                    <button type="button" class="btn btn-secondary" onclick="toggleDescription({{ object['n_object_id'] }})" style="background: darkred;">
+                        {% if object['n_object_type'] == 1 %}
+                        <span class="material-icons-round">chair</span>
+                        {% else %}
+                        <span class="material-icons-round">check_box_outline_blank</span>
+                        {% endif %}
                     </button>
-                    {% elif object[5] == 3 %}
-                    <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
-                            data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5] }}
-                            data-bs-original-title= {{ object[1] }} style="background: darkgoldenrod;">
-                            <span class="material-icons-round">chair</span>
+                    <div name="info_card" id="{{ object['n_object_id'] }}" class="card" style="display: none">
+                      <div class="card-header">
+                        Sitzplatz {{ object['n_object_id'] }}
+                      </div>
+                      <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Reihe: {{ object['n_grid_coordinate_y'] }}</li>
+                            <li class="list-group-item">Sitplatz: {{ object['n_grid_coordinate_x'] }}</li>
+                            <li class="list-group-item">Ausstattung: {{ object['arr_equipment'] }}</li>
+                        </ul>
+                        <form action="/reserve_seat" method="post">
+                            <button type="submit" class="btn btn-primary" disabled>Reservieren</button>
+                        </form>
+                      </div>
+                    </div>
+                    {% elif object['n_status_id'] == 3 %}
+                    <button type="button" class="btn btn-secondary" onclick="toggleDescription({{ object['n_object_id'] }})" style="background: darkgoldenrod;">
+                        {% if object['n_object_type'] == 1 %}
+                        <span class="material-icons-round">chair</span>
+                        {% else %}
+                        <span class="material-icons-round">check_box_outline_blank</span>
+                        {% endif %}
                     </button>
+                    <div name="info_card" id="{{ object['n_object_id'] }}" class="card" style="display: none">
+                      <div class="card-header">
+                        Sitzplatz {{ object['n_object_id'] }}
+                      </div>
+                      <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Reihe: {{ object['n_grid_coordinate_y'] }}</li>
+                            <li class="list-group-item">Sitplatz: {{ object['n_grid_coordinate_x'] }}</li>
+                            <li class="list-group-item">Ausstattung: {{ object['arr_equipment'] }}</li>
+                        </ul>
+                        <form action="/reserve_seat" method="post">
+                            <button type="submit" class="btn btn-primary" disabled>Reservieren</button>
+                        </form>
+                      </div>
+                    </div>
                     {% else %}
-                    <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
-                            data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5] }}
-                            data-bs-original-title= {{ object[1] }}>
-                                <span class="material-icons-round">chair</span>
+                    <button type="button" class="btn btn-secondary" onclick="toggleDescription({{ object['n_object_id'] }})" style="background: slategrey">
+                        {% if object['n_object_type'] == 1 %}
+                        <span class="material-icons-round">chair</span>
+                        {% else %}
+                        <span class="material-icons-round">check_box_outline_blank</span>
+                        {% endif %}
                     </button>
-
+                    <div name="info_card" id="{{ object[0] }}" class="card" style="display: none">
+                      <div class="card-header">
+                        Sitzplatz {{ object['n_object_id'] }}
+                      </div>
+                      <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Reihe: {{ object['n_grid_coordinate_y'] }}</li>
+                            <li class="list-group-item">Sitplatz: {{ object['n_grid_coordinate_x'] }}</li>
+                            <li class="list-group-item">Ausstattung: {{ object['arr_equipment'] }}</li>
+                        </ul>
+                        <form action="/reserve_seat" method="post">
+                            <button type="submit" class="btn btn-primary">Reservieren</button>
+                        </form>
+                      </div>
+                    </div>
                     {% endif %}
                 </td>
                 {% endfor %}
@@ -53,5 +161,18 @@
         </table>
     </div>
 </div>
+<script>
+function toggleDescription(id) {
+    let targetDiv = document.getElementById(id);
+    document.getElementsByName("info_card").forEach(element => element.style.display="none");
 
+    if (targetDiv.style.display !== "none") {
+    targetDiv.style.display = "none";
+  } else {
+    targetDiv.style.display = "block";
+  }
+};
+
+
+</script>
 {% endblock %}

@@ -47,25 +47,31 @@ class DatabaseConnector:
 
     def execute_sql(self, sql: str) -> bool:
         """
-        Function to use when calling a procedure or transaction in Psy
+        Function to use when calling a procedure or transaction in Psycopg2
         :param sql: SQL query as string
         :return:
-        bool
-             Success of operation
+        List
+             bool: Success of operation
+             list: Return value of operation
         """
 
         try:
             db_cursor = self.psycopg2_connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
             db_cursor.execute(sql)
+            try:
+                result = db_cursor.fetchall()
+            except psycopg2.errors.ProgrammingError:
+                result = None
+
             self.psycopg2_connection.commit()
             db_cursor.close()
             logging.info("Executed SQL query successfully")
-            return True
+            return True, result
         except psycopg2.errors.InFailedSqlTransaction:
             self.b_connected = False
             self.connect()
             logging.error("Transaction Failed - Review given inputs! Reestablished connection to database backend")
-            return False
+            return False, None
 
     def example_init(self):
         status = self._check_initialisation()
