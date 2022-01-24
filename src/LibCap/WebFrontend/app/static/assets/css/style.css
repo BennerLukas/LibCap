@@ -5,9 +5,29 @@
 * License: https://bootstrapmade.com/license/
 */
 
+.btn-primary:hover {
+  border-color: #7bbad7;
+  background-color: #7bbad7;
+}
+
+.btn-primary {
+  border-color: #7bbad7;
+  background-color: #7bbad7;
+}
+
+.form-check-input:checked {
+  background-color: #7bbad7;
+  border-color: #7bbad7;
+}
+
+.table {
+  border-color: white;
+}
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+
+
 body {
   font-family: "Open Sans", sans-serif;
   color: #444444;

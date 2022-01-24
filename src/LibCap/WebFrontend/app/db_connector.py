@@ -70,7 +70,7 @@ class DatabaseConnector:
             return True, result
         except psycopg2.errors.InFailedSqlTransaction:
             self.b_connected = False
-            self.connect()
+            self._connect()
             logging.error("Transaction Failed - Review given inputs! Reestablished connection to database backend")
             return False, None
 

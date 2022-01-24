@@ -45,10 +45,11 @@
         <div class="logo">
 
             <h1 class="text-light">
-                <a href="/">
-                    <a href="/"><img src="static/assets/img/libcap_logo_only_book.png" alt="" class="img-fluid"></a>
+                    <a href="/">
+                        <img src="static/assets/img/libcap_logo_only_book.png" alt="" class="img-fluid">
                     <span>  LibCap</span>
-                </a></h1>
+                    </a>
+            </h1>
             <!-- Uncomment below if you prefer to use an image logo -->
         </div>
 
@@ -139,7 +140,7 @@
                 <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
                     <div class="icon-box" data-aos="fade-up">
                         <div class="icon"><i class="bi bi-plug"></i></div>
-                        <h4 class="title"><a href="">Power</a></h4>
+                        <h4 class="title"><a href="#dashboard">Power</a></h4>
                         <p class="description">Workstations can have their own dedicated power plugs to charge your
                             Notebook or Tablet while working.</p>
                     </div>
@@ -148,62 +149,29 @@
                 <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
                     <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
                         <div class="icon"><i class="bi bi-ethernet"></i></div>
-                        <h4 class="title"><a href="">Ethernet</a></h4>
-                        <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                            dolore</p>
+                        <h4 class="title"><a href="#dashboard">Ethernet</a></h4>
+                        <p class="description">Despite Wifi on these workstations u can use a wired connection.</p>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
                     <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
                         <div class="icon"><i class="bi bi-pc-display"></i></div>
-                        <h4 class="title"><a href="">PC</a></h4>
-                        <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                            blanditiis</p>
+                        <h4 class="title"><a href="#dashboard">PC</a></h4>
+                        <p class="description">On these places you can use the shared computers.</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
                     <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
                         <div class="icon"><i class="bi bi-lamp"></i></i></div>
-                        <h4 class="title"><a href="">Lamp</a></h4>
-                        <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                            officia</p>
+                        <h4 class="title"><a href="#dashboard">Lamp</a></h4>
+                        <p class="description">These Workstations have reading lights for long sessions in the evening.</p>
                     </div>
                 </div>
 
 
             </div>
 
-            <!-- Pie Chart -->
-            <canvas id="pieChart" style="max-height: 400px;"></canvas>
-            <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                    new Chart(document.querySelector('#pieChart'), {
-                        type: 'pie',
-                        data: {
-                            labels: [
-                                'Frei',
-                                'Belegt',
-                                'Reserviert'
-                            ],
-                            datasets: [{
-                                label: 'My First Dataset',
-                                data: {{auslastungs_liste}
-                        },
-                        backgroundColor: [
-                            'rgb(78,161,76)',
-                            'rgb(162,83,57)',
-                            'rgb(230,229,69)'
-                        ],
-                        hoverOffset: 4
-                    }
-                ]
-                }
-                })
-                    ;
-                });
-            </script>
-            <!-- End Pie CHart -->
 
         </div>
     </section><!-- End Services Section -->
@@ -217,7 +185,8 @@
                 <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                     <div class="count-box">
                         <i class="bi bi-person-workspace"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_total_workstations }}" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_total_workstations }}"
+                              data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Number of<strong>total Workstations</strong></p>
                     </div>
@@ -226,7 +195,8 @@
                 <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                     <div class="count-box">
                         <i class="bi bi-tools"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_maintenance_workstations }}" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_maintenance_workstations }}"
+                              data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Number of Workstations in <strong>Maintenance</strong></p>
                     </div>
@@ -235,7 +205,8 @@
                 <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                     <div class="count-box">
                         <i class="bi bi-unlock"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_available_workstations }}" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_available_workstations }}"
+                              data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Number of <strong>Workstations available</strong></p>
                     </div>
@@ -244,7 +215,8 @@
                 <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                     <div class="count-box">
                         <i class="bi bi-lock"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_occupied_workstations }}" data-purecounter-duration="1"
+                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_occupied_workstations }}"
+                              data-purecounter-duration="1"
                               class="purecounter"></span>
                         <p>Number of <strong>Workstations occupied</strong></p>
                     </div>
@@ -280,61 +252,79 @@
                 <p>See which places are free and which are occupied. You can also reserve places instantly and for a
                     short term.</p>
             </div>
-            <script>
-                var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-                var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-                    return new bootstrap.Popover(popoverTriggerEl)
-                })
+           <script>
+            function toggleDescription(id) {
+                let targetDiv = document.getElementById(id);
+                let previousState = targetDiv.style.display
+                document.getElementsByName("info_card").forEach(element => element.style.display="none");
 
-
+                if (previousState === "block") {
+                targetDiv.style.display = "none";
+              } else {
+                targetDiv.style.display = "block";
+              }
+            };
             </script>
 
-            <div>
-                <div class="table-responsive">
-                    <table class="table table-sm">
-                        {% for object_row in objects %}
-                        <tr>
-                            {% for object in object_row %}
-                            <td>
-                                {% if object[5] == 1 %}
-                                <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
-                                        data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5]
-                                        }}
-                                        data-bs-original-title={{ object[1] }} style="background: green;">
-                                    <span class="material-icons-round">chair</span>
-                                </button>
+<div class="table-responsive">
+        <table class="table table-sm" style="border: rgba(55, 142, 181, 0);">
+            {% for object_row in objects %}
+            <tr>
+                {% for object in object_row %}
+                {% if object['n_object_type'] == 1 %}
+                <td style="background: rgba(55, 142, 181, 0.4); text-align: center">
+                {% else %}
+                <td style="background: rgba(55, 142, 181, 0.6); text-align: center">
+                {% endif %}
+                    <!--- Available -->
+                   {% if object['n_object_type'] == 1 and object['n_status_id'] == 1 %}
+                   <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style="background: green;">
+                   <!--- Occupied -->
+                   {% elif object['n_object_type'] == 1 and (object['n_status_id'] == 2 or object['n_status_id'] == 3) %}
+                   <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style="background: red;">
+                   <!--- N/A --->
+                   {% elif object['n_object_type'] == 1 and object['n_status_id'] == 4 %}
+                   <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style="background: grey;">
+                   <!--- Reserved --->
+                   {% elif object['n_object_type'] == 1 and object['n_status_id'] == 5 %}
+                   <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style="background: orange;">
+                   <!--- Not a chair -->
+                   {% elif object['n_object_type'] != 1 %}
+                   <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style='visibility:hidden;'>
+                   {% endif %}
+                   {% if object['n_object_type'] == 1 %}
+                   <i class="bi bi-person-workspace"></i>
+                   {% endif %}
+                   </button>
 
-                                {% elif object[5] == 2 %}
-                                <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
-                                        data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5]
-                                        }}
-                                        data-bs-original-title={{ object[1] }} style="background: darkred;">
-                                    <span class="material-icons-round">chair</span>
-                                </button>
-                                {% elif object[5] == 3 %}
-                                <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
-                                        data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5]
-                                        }}
-                                        data-bs-original-title={{ object[1] }} style="background: darkgoldenrod;">
-                                    <span class="material-icons-round">chair</span>
-                                </button>
-                                {% else %}
-                                <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
-                                        data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5]
-                                        }}
-                                        data-bs-original-title={{ object[1] }}>
-                                    <span class="material-icons-round">chair</span>
-                                </button>
+                   <div name="info_card" id="btn_{{ object['n_object_id'] }}" class="card" style="display: none">
+                      <div class="card-header">
+                        Seat number {{ object['n_object_id'] }}
+                      </div>
+                      <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Row: {{ object['n_grid_coordinate_y'] }}</li>
+                            <li class="list-group-item">Column: {{ object['n_grid_coordinate_x'] }}</li>
+                            <li class="list-group-item">Equipment: {{ object['arr_equipment'] }}</li>
+                        </ul>
+                        <form action="/reserve_seat" method="post">
+                            {% if object['n_status_id'] == 1 %}
+                            <button type="submit" class="btn btn-primary">Reserve seat</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-primary" disabled>Reserve seat</button>
+                            {% endif %}
+                            <input type="text" id="{{ object['n_object_id'] }}" name="seat_id" value="{{ object['n_object_id'] }}" style="display: none">
+                        </form>
+                      </div>
+                    </div>
 
-                                {% endif %}
-                            </td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
 
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
         </div>
     </section><!-- End Portfolio Section -->
 
@@ -363,12 +353,7 @@
                         <input type="number" min="1" class="form-control" id="inputY" name="inputY" required>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <label for="inputZ" class="col-sm-2 col-form-label">Z</label>
-                    <div class="col-sm-10">
-                        <input type="number" min="1" class="form-control" id="inputZ" name="inputZ" required>
-                    </div>
-                </div>
+
                 <fieldset class="row mb-3">
                     <legend class="col-form-label col-sm-2 pt-0">Default State</legend>
                     <div class="col-sm-10">

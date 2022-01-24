@@ -22,14 +22,12 @@ class Backend:
             n_object_type, 
             n_grid_coordinate_x, 
             n_grid_coordinate_y, 
-            n_grid_coordinate_z, 
             arr_equipment, 
             n_status_id)
         VALUES (
             {param_list.get("object_type", 1)},
             {param_list.get("x")},
             {param_list.get("y")},
-            {param_list.get("z")},
             ARRAY [{equipment_list_str}],
             {param_list.get("status")})
         RETURNING n_object_id;
@@ -37,15 +35,6 @@ class Backend:
         """
         bool, result = self.dbc.execute_sql(sql_string)
         return result
-
-    def set_user(self, username: str, password: str) -> str:
-        sql_string = f"SELECT * FROM LB_USER WHERE username = {username} AND password = {password}"
-        user = self.dbc.get_select(sql_string)
-        if user is False:
-            return False
-        else:
-            self.user = username
-            return True
 
     def get_auslastung(self) -> List[int]:
         anzahl_frei = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1").iat[0, 0]
@@ -56,6 +45,8 @@ class Backend:
 
     def get_sitzplaetze(self) -> List[Dict]:
         df = self.dbc.get_select('SELECT DISTINCT * FROM objects')
+        df["n_grid_coordinate_x"] = df["n_grid_coordinate_x"].astype(int)
+        df["n_grid_coordinate_y"] = df["n_grid_coordinate_y"].astype(int)
         # transpose dataframe to be usable as dictionary
         data_transposed_as_dict = df.transpose().to_dict()
         # create a list with each object
@@ -88,3 +79,10 @@ class Backend:
             endergebnis.append(subliste)
 
         return endergebnis
+
+    def get_counter(self):
+        ctr_occupied_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 2 OR n_status_id = 3").iat[0, 0]
+        ctr_available_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1").iat[0, 0]
+        ctr_maintenance_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 4").iat[0, 0]
+        ctr_total_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS").iat[0, 0]
+        return ctr_occupied_workstations, ctr_available_workstations, ctr_maintenance_workstations, ctr_total_workstations
