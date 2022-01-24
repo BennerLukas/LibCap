@@ -77,7 +77,7 @@ CREATE TRIGGER change_tracker AFTER UPDATE
 
 -- INSERTS
 INSERT INTO CURRENT_STATUS (s_status_name)
-    VALUES ('Free'), ('Occupied'), ('Grace Period'), ('Unavailable');
+    VALUES ('Free'), ('Occupied'), ('Grace Period'), ('Unavailable'), ('Reserved');
 
 --INSERT INTO OBJECTS (n_grid_coordinate_x, n_grid_coordinate_y, n_grid_coordinate_z, arr_equipment, n_status_id)
 --    VALUES (1, 1, 1, '{plug}', 1);

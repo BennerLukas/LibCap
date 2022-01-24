@@ -9,10 +9,10 @@ class Backend:
         self.user = None
 
     def add_controller_to_database(self, param_list) -> int:
-        equipment_list = ["LAN", "Lampe", "Steckdose", "Drehstuhl"]
+        equipment_list = ["Ethernet", "Lamp", "Plug", "PC"]
         bool_conversion = {"on": True, "off": False}
-        equipment_list_bool = [bool_conversion.get(param_list.get("LAN")), bool_conversion.get(param_list.get("Lampe")),
-                               bool_conversion.get(param_list.get("Steckdose")), bool_conversion.get(param_list.get("Drehstuhl"))]
+        equipment_list_bool = [bool_conversion.get(param_list.get("Ethernet")), bool_conversion.get(param_list.get("Lamp")),
+                               bool_conversion.get(param_list.get("Plug")), bool_conversion.get(param_list.get("PC"))]
         equipment_list_decoded = ["'" + str(equipment) + "'" for index, equipment in enumerate(equipment_list) if
                                   equipment_list_bool[index]]
         equipment_list_str = ",".join(equipment_list_decoded)
@@ -81,8 +81,8 @@ class Backend:
         return endergebnis
 
     def get_counter(self):
-        ctr_occupied_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 2 OR n_status_id = 3").iat[0, 0]
-        ctr_available_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1").iat[0, 0]
-        ctr_maintenance_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 4").iat[0, 0]
-        ctr_total_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS").iat[0, 0]
+        ctr_occupied_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 2 OR n_status_id = 3 AND n_object_type = 1").iat[0, 0]
+        ctr_available_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1 AND n_object_type = 1").iat[0, 0]
+        ctr_maintenance_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 4 AND n_object_type = 1").iat[0, 0]
+        ctr_total_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_object_type = 1").iat[0, 0]
         return ctr_occupied_workstations, ctr_available_workstations, ctr_maintenance_workstations, ctr_total_workstations

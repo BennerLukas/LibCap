@@ -7,7 +7,7 @@ from app.db_connector import DatabaseConnector
 from app.backend_functions import Backend
 
 dbc = DatabaseConnector()
-# dbc.example_init()
+dbc.example_init()
 backend = Backend(dbc)
 app.secret_key = '5uY4^$u!%lWlAk%3DkM2iL9^!DtJqfyduTc4pyA1uv9JG5ud!Ew@@dsa5'
 
@@ -32,10 +32,10 @@ def execute_add_controller():
     param_list = {"x": request.form['inputX'],
                   "y": request.form['inputY'],
                   "status": request.form['gridRadios'],
-                  "LAN": request.form.get('gridCheck1', "off"),
-                  "Lampe": request.form.get('gridCheck2', "off"),
-                  "Steckdose": request.form.get('gridCheck3', "off"),
-                  "Drehstuhl": request.form.get('gridCheck4', "off")}
+                  "Ethernet": request.form.get('gridCheck1', "off"),
+                  "Lamp": request.form.get('gridCheck2', "off"),
+                  "Plug": request.form.get('gridCheck3', "off"),
+                  "PC": request.form.get('gridCheck4', "off")}
     new_id = backend.add_controller_to_database(param_list)
     flash(f"Neuer Controller mit ID {new_id} hinzugefügt!")
     return redirect("/")

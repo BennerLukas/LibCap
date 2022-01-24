@@ -278,16 +278,16 @@
                 {% endif %}
                     <!--- Available -->
                    {% if object['n_object_type'] == 1 and object['n_status_id'] == 1 %}
-                   <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style="background: green;">
+                   <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style="background: #4EA14C;">
                    <!--- Occupied -->
                    {% elif object['n_object_type'] == 1 and (object['n_status_id'] == 2 or object['n_status_id'] == 3) %}
-                   <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style="background: red;">
+                   <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style="background: #A25339;">
                    <!--- N/A --->
                    {% elif object['n_object_type'] == 1 and object['n_status_id'] == 4 %}
                    <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style="background: grey;">
                    <!--- Reserved --->
                    {% elif object['n_object_type'] == 1 and object['n_status_id'] == 5 %}
-                   <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style="background: orange;">
+                   <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style="background: #E6E545;">
                    <!--- Not a chair -->
                    {% elif object['n_object_type'] != 1 %}
                    <button type="button" class="btn btn-secondary" onclick="toggleDescription('btn_{{ object['n_object_id'] }}')" style='visibility:hidden;'>
