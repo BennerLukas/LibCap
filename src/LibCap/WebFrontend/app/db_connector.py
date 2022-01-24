@@ -11,8 +11,8 @@ import time
 
 class DatabaseConnector:
     def __init__(self):
-        # self.hostname = "localhost"
-        self.hostname = "database"
+        self.hostname = "localhost"
+        # self.hostname = "database"
         self.port = 5432
 
         self.alchemy_engine = None

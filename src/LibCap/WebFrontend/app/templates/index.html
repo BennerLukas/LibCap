@@ -1,15 +1,180 @@
-{% extends "includes/base.html" %}
-{% block title %}Home{% endblock %}
-{% block heading %}Auslastungsübersicht{% endblock %}
-{% block body %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<div>
-     <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Momentane Belegung</h5>
+<!DOCTYPE html>
+<html lang="en">
 
-              <!-- Pie Chart -->
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Lib-Cap Dashboard</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="static/assets/img/LibCap_simple_black.png" rel="icon">
+    <link href="static/assets/img/LibCap_simple_black.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="static/assets/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: Squadfree - v4.7.0
+    * Template URL: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top header-transparent">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <div class="logo">
+
+            <h1 class="text-light">
+                <a href="/">
+                    <a href="/"><img src="static/assets/img/libcap_logo_only_book.png" alt="" class="img-fluid"></a>
+                    <span>  LibCap</span>
+                </a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+        </div>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                <li><a class="nav-link scrollto" href="#library">Library</a></li>
+                <li><a class="nav-link scrollto" href="#overview">Overview</a></li>
+                <li><a class="nav-link scrollto" href="#dashboard">Dashboard</a></li>
+                <li><a class="nav-link scrollto" href="#add">Add Controller</a></li>
+                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+    <div class="hero-container" data-aos="fade-up">
+        <h1>Welcome to LibCap</h1>
+        <h2>The Library Capacity Measurement System</h2>
+        <a href="#dashboard" class="btn-get-started scrollto"><i class="bx bx-chevrons-down"></i></a>
+    </div>
+</section><!-- End Hero -->
+
+<main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="library" class="about">
+        <div class="container">
+
+            <div class="row no-gutters">
+                <div class="content col-xl-5 d-flex align-items-stretch" data-aos="fade-up">
+                    <div class="content">
+                        <h3>Library Capacity Measurement System</h3>
+                        <p>
+                            Now you can view the usage of the Lean and Workstations in your library or bibliotheca, easy
+                            and comfortable online thanks to the LibCap System.
+                        </p>
+                        <a href="#dashboard" class="about-btn">Dashboard <i class="bx bx-chevron-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-xl-7 d-flex align-items-stretch">
+                    <div class="icon-boxes d-flex flex-column justify-content-center">
+                        <div class="row">
+                            <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
+                                <i class="bi bi-server"></i>
+                                <h4>On-Premise</h4>
+                                <p>Install it easily thanks to Docker on your own hardware.</p>
+                            </div>
+                            <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
+                                <i class="bi bi-plus-circle"></i>
+                                <h4>Extend</h4>
+                                <p>Add new controller at any time over the User Interface.</p>
+                            </div>
+                            <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
+                                <i class="bi bi-gear"></i>
+                                <h4>Customize</h4>
+                                <p>Describe the different Workstations depending on their equipment.</p>
+                            </div>
+                            <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="400">
+                                <i class="bi bi-arrows-angle-expand"></i>
+                                <h4>Scalable</h4>
+                                <p>Thanks to Docker and MQTT you can scale it to your liking easily.</p>
+                            </div>
+                        </div>
+                    </div><!-- End .content-->
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="overview" class="services">
+        <div class="container">
+
+            <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                <h2>Overview</h2>
+                <p>
+                    Get a quick overview about the current state of the usage and the kinds of workstations.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box" data-aos="fade-up">
+                        <div class="icon"><i class="bi bi-plug"></i></div>
+                        <h4 class="title"><a href="">Power</a></h4>
+                        <p class="description">Workstations can have their own dedicated power plugs to charge your
+                            Notebook or Tablet while working.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                        <div class="icon"><i class="bi bi-ethernet"></i></div>
+                        <h4 class="title"><a href="">Ethernet</a></h4>
+                        <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                            dolore</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+                        <div class="icon"><i class="bi bi-pc-display"></i></div>
+                        <h4 class="title"><a href="">PC</a></h4>
+                        <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui
+                            blanditiis</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+                        <div class="icon"><i class="bi bi-lamp"></i></i></div>
+                        <h4 class="title"><a href="">Lamp</a></h4>
+                        <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                            officia</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+             <!-- Pie Chart -->
               <canvas id="pieChart" style="max-height: 400px;"></canvas>
               <script>
                 document.addEventListener("DOMContentLoaded", () => {
@@ -37,8 +202,356 @@
               </script>
               <!-- End Pie CHart -->
 
-            </div>
-          </div>
         </div>
-</div>
-{% endblock %}
+    </section><!-- End Services Section -->
+
+    <!-- ======= Counts Section ======= -->
+    <section id="counts" class="counts  section-bg">
+        <div class="container">
+
+            <div class="row no-gutters">
+
+                <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+                    <div class="count-box">
+                        <i class="bi bi-person-workspace"></i>
+                        <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
+                              class="purecounter"></span>
+                        <p>Number of<strong>total Workstations</strong></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+                    <div class="count-box">
+                        <i class="bi bi-tools"></i>
+                        <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"
+                              class="purecounter"></span>
+                        <p>Number of Workstations in <strong>Maintenance</strong></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+                    <div class="count-box">
+                        <i class="bi bi-unlock"></i>
+                        <span data-purecounter-start="0" data-purecounter-end="83" data-purecounter-duration="1"
+                              class="purecounter"></span>
+                        <p>Number of <strong>Workstations available</strong></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+                    <div class="count-box">
+                        <i class="bi bi-lock"></i>
+                        <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1"
+                              class="purecounter"></span>
+                        <p>Number of <strong>Workstations occupied</strong></p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Counts Section -->
+
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+        <div class="container" data-aos="zoom-in">
+
+            <div class="text-center">
+                <h3>Add a new Controller</h3>
+                <p>
+                    You want to add a new Workstation? Just generate a new virtual entry and install the physical
+                    microcontroller.
+                </p>
+                <a class="cta-btn" href="#add">Add Controller</a>
+            </div>
+
+        </div>
+    </section><!-- End Cta Section -->
+
+    <!-- ======= Dashboard Section ======= -->
+    <section id="dashboard" class="portfolio">
+        <div class="container">
+
+            <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                <h2>Dashboard</h2>
+                <p>See which places are free and which are occupied. You can also reserve places instantly and for a
+                    short term.</p>
+            </div>
+            <script>
+                var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+                var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                    return new bootstrap.Popover(popoverTriggerEl)
+                })
+
+
+            </script>
+
+            <div>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        {% for object_row in objects %}
+                        <tr>
+                            {% for object in object_row %}
+                            <td>
+                                {% if object[5] == 1 %}
+                                <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
+                                        data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5]
+                                        }}
+                                        data-bs-original-title={{ object[1] }} style="background: green;">
+                                    <span class="material-icons-round">chair</span>
+                                </button>
+
+                                {% elif object[5] == 2 %}
+                                <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
+                                        data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5]
+                                        }}
+                                        data-bs-original-title={{ object[1] }} style="background: darkred;">
+                                    <span class="material-icons-round">chair</span>
+                                </button>
+                                {% elif object[5] == 3 %}
+                                <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
+                                        data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5]
+                                        }}
+                                        data-bs-original-title={{ object[1] }} style="background: darkgoldenrod;">
+                                    <span class="material-icons-round">chair</span>
+                                </button>
+                                {% else %}
+                                <button type="button" class="btn btn-secondary" title="" data-bs-container="body"
+                                        data-bs-toggle="popover" data-bs-placement="right" data-bs-content={{ object[5]
+                                        }}
+                                        data-bs-original-title={{ object[1] }}>
+                                    <span class="material-icons-round">chair</span>
+                                </button>
+
+                                {% endif %}
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End Portfolio Section -->
+
+    <!-- ======= Add Controller Section ======= -->
+    <section id="add" class="testimonials section-bg">
+        <div class="container">
+
+            <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                <h2>Add a new Controller</h2>
+                <p>
+                    Fill out the following form and install the new microcontroller with the according ID programmed
+                    into it.
+                </p>
+            </div>
+
+            <form action="/execute_add_controller" method="post">
+                <div class="row mb-3">
+                    <label for="inputX" class="col-sm-2 col-form-label">X</label>
+                    <div class="col-sm-10">
+                        <input type="number" min="1" class="form-control" id="inputX" name="inputX" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputY" class="col-sm-2 col-form-label">Y</label>
+                    <div class="col-sm-10">
+                        <input type="number" min="1" class="form-control" id="inputY" name="inputY" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputZ" class="col-sm-2 col-form-label">Z</label>
+                    <div class="col-sm-10">
+                        <input type="number" min="1" class="form-control" id="inputZ" name="inputZ" required>
+                    </div>
+                </div>
+                <fieldset class="row mb-3">
+                    <legend class="col-form-label col-sm-2 pt-0">Default State</legend>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value=1
+                                   checked>
+                            <label class="form-check-label" for="gridRadios1">
+                                Free
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value=2>
+                            <label class="form-check-label" for="gridRadios2">
+                                Occupied
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value=3>
+                            <label class="form-check-label" for="gridRadios3">
+                                Reserved
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios4" value=4>
+                            <label class="form-check-label" for="gridRadios4">
+                                Maintenance
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="row mb-3">
+                    <legend class="col-form-label col-sm-2 pt-0">Equipment</legend>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="gridCheck1" id="gridCheck1">
+                            <label class="form-check-label" for="gridCheck1">
+                                Ethernet
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="gridCheck2" id="gridCheck2">
+                            <label class="form-check-label" for="gridCheck2">
+                                Lamp
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="gridCheck3" id="gridCheck3">
+                            <label class="form-check-label" for="gridCheck3">
+                                Power Plug
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="gridCheck4" id="gridCheck4">
+                            <label class="form-check-label" for="gridCheck4">
+                                PC
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </form>
+
+
+        </div>
+    </section><!-- End Testimonials Section -->
+
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Contact</h2>
+                <p>
+                    Find the library here.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="info-box mb-4">
+                        <i class="bx bx-map"></i>
+                        <h3>Our Address</h3>
+                        <p>DHBW Mannheim Coblitzallee 1-9 68163 Mannheim</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="info-box  mb-4">
+                        <i class="bx bx-envelope"></i>
+                        <h3>Email Us</h3>
+                        <p>info@dhbw-mannheim.de</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="info-box  mb-4">
+                        <i class="bx bx-phone-call"></i>
+                        <h3>Call Us</h3>
+                        <p>+49 621 4105-0</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6 ">
+                    <iframe class="mb-4 mb-lg-0"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2592.5645088662!2d8.532230215853811!3d49.47384276512779!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4797cf2383b0c65d%3A0x1105b8c90448a69d!2sDHBW%20Mannheim!5e0!3m2!1sde!2sde!4v1643033176442!5m2!1sde!2sde"
+                            frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
+                </div>
+
+                <div class="col-lg-6">
+                    <form action="static/forms/contact.php" method="post" role="form" class="php-email-form">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name"
+                                       required>
+                            </div>
+                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                <input type="email" class="form-control" name="email" id="email"
+                                       placeholder="Your Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject"
+                                   required>
+                        </div>
+                        <div class="form-group mt-3">
+                            <textarea class="form-control" name="message" rows="5" placeholder="Message"
+                                      required></textarea>
+                        </div>
+                        <div class="my-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+
+    <div class="container">
+        <div class="copyright">
+            &copy; Copyright <strong><span>LibCap</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/ -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="static/assets/vendor/purecounter/purecounter.js"></script>
+<script src="static/assets/vendor/aos/aos.js"></script>
+<script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="static/assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="static/assets/js/main.js"></script>
+
+</body>
+
+</html>
