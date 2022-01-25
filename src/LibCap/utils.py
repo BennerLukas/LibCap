@@ -59,3 +59,4 @@ def set_logger(name, mode="debug", write_log=False, full_path="./debug.log", wri
         logger.addHandler(file_handler)
 
     return logger
+

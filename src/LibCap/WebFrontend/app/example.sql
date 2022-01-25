@@ -2,6 +2,7 @@
 INSERT INTO objects (n_object_type, n_grid_coordinate_x, n_grid_coordinate_y, n_grid_coordinate_z, arr_equipment,
                      n_status_id)
 VALUES (1, 1, 1, 1, ARRAY ['Ethernet', 'Plug', 'Lamp'], 1);
+
 INSERT INTO objects (n_object_type, n_grid_coordinate_x, n_grid_coordinate_y, n_grid_coordinate_z, arr_equipment,
                      n_status_id)
 VALUES (1, 2, 1, 1, ARRAY ['Ethernet', 'Plug', 'Lamp'], 2);

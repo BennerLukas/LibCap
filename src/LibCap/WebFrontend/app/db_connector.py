@@ -1,4 +1,5 @@
 import os
+import random
 
 import sqlalchemy
 import psycopg2
@@ -75,17 +76,20 @@ class DatabaseConnector:
             logging.error("Transaction Failed - Review given inputs! Reestablished connection to database backend")
             return False, None
 
-    def example_init(self):
+    def example_init(self, build_floorplan=True):
         status = self._check_initialisation()
         if status is False:
             logging.error("Executing Example Init")
-            for root, dirs, files in os.walk("/src/"):
-                if "example.sql" in files:
-                    path = os.path.join(root, "example.sql")
-                    logging.info(f"Path für Example in Docker: {path}")
-            with open(path) as file:
-                sql_string = file.read()
-            self.execute_sql(sql_string)
+            if build_floorplan is True:
+                self.generate_floorplan_data()
+            else:
+                for root, dirs, files in os.walk("/src/"):
+                    if "example.sql" in files:
+                        path = os.path.join(root, "example.sql")
+                        logging.info(f"Path für Example in Docker: {path}")
+                with open(path) as file:
+                    sql_string = file.read()
+                self.execute_sql(sql_string)
         else:
             logging.error("Already initialized.")
 
@@ -113,3 +117,60 @@ class DatabaseConnector:
         else:
             self.initialized = False
             return False
+
+    def generate_floorplan_data(self, grid=None):
+        """
+        n_object_type -> 1: workstation / 2: placeholder
+        arr_equipment -> ["PC", "Plug"]
+        n_status_id -> 1: free / 4: maintenance
+        :return:
+        """
+        if grid is None:
+            grid = [
+                [0, 2, 1, 2, 1, 1, 2],
+                [1, 2, 1, 2, 1, 1, 2],
+                [1, 2, 1, 2, 1, 1, 2],
+                [2, 2, 2, 2, 2, 2, 2],
+                [2, 2, 2, 2, 2, 2, 2],
+                [1, 2, 1, 2, 1, 1, 2],
+                [1, 2, 1, 2, 1, 1, 2],
+                [2, 2, 2, 2, 2, 2, 2],
+                [2, 2, 2, 2, 2, 2, 2],
+                [1, 2, 1, 2, 1, 1, 2],
+                [1, 2, 1, 2, 1, 1, 2],
+                [1, 2, 1, 2, 1, 1, 2],
+
+            ]
+        possible_equipment = ["Ethernet", "Lamp", "Plug", "PC"]
+
+        for y, row in enumerate(grid):
+            for x, obj in enumerate(row):
+                if obj == 2:
+                    # placeholder
+                    self.insert_workstation([2, x+1, y+1, "NULL", [], 4])
+                elif obj == 1:
+                    # random_equipment = list(set([random.choice(possible_equipment) for _ in range(random.randint(0, 3))]))
+                    random_equipment = random.sample(possible_equipment, k=random.randint(0, 3))
+                    random_status = 1 if random.randint(1, 10) < 9 else 4
+                    self.insert_workstation([1, x+1, y+1, "NULL", random_equipment, random_status])
+                elif obj == 0:
+                    self.insert_workstation(
+                        [1, 1, 1, "NULL", possible_equipment, 1])  # Default Workstation fully equipped
+                else:
+                    raise
+        return True
+
+    def insert_workstation(self, param_list):
+        sql_string = f"""
+        INSERT INTO objects (n_object_type, n_grid_coordinate_x, n_grid_coordinate_y, n_grid_coordinate_z, arr_equipment,n_status_id) 
+        VALUES (
+        {param_list[0]}, 
+        {param_list[1]}, 
+        {param_list[2]}, 
+        {param_list[3]}, 
+        ARRAY {param_list[4]}::varchar[], 
+        {param_list[5]}
+        );"""
+        print(sql_string)
+        bool, result = self.execute_sql(sql_string)
+        return bool

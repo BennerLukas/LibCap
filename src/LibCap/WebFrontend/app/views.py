@@ -18,9 +18,9 @@ def index():
     # 10 freie
     # 4 belegt
     #
-    occupancy_rate = backend.get_auslastung()
+    occupancy_rate = backend.get_occupancy()
     ctr_occupied_workstations, ctr_available_workstations, ctr_maintenance_workstations, ctr_total_workstations = backend.get_counter()
-    objects_grouped = backend.get_sitzplaetze()
+    objects_grouped = backend.get_dashboard_infos()
     workstations = backend.get_workstations()
     current_usage = round(((ctr_occupied_workstations + ctr_maintenance_workstations) / ctr_total_workstations) * 100, 1)
     timeseries_forecast = backend.get_timeseries_forecast()

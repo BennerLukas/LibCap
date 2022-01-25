@@ -24,6 +24,12 @@ class Backend:
 
         equipment_list_str = self._prep_param_list(param_list)
 
+        # test if object already exists
+        result = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_grid_coordinate_x = {param_list.get('x')} AND n_grid_coordinate_y = {param_list.get('y')}").iat[0, 0]
+        if result == 1:
+            # already in use
+            return None
+
         sql_string = f"""
         INSERT INTO OBJECTS(
             n_object_type, 
@@ -43,49 +49,49 @@ class Backend:
         bool, result = self.dbc.execute_sql(sql_string)
         return result
 
-    def get_auslastung(self) -> List[int]:
-        anzahl_frei = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1").iat[0, 0]
-        anzahl_belegt = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 2").iat[0, 0]
-        anzahl_reserviert = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 3").iat[
+    def get_occupancy(self) -> List[int]:
+        number_available = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1").iat[0, 0]
+        number_occupied = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 2").iat[0, 0]
+        number_reserved = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 3").iat[
             0, 0]
-        return [anzahl_frei, anzahl_belegt, anzahl_reserviert]
+        return [number_available, number_occupied, number_reserved]
 
-    def get_sitzplaetze(self) -> List[Dict]:
+    def get_dashboard_infos(self) -> List[Dict]:
         df = self.dbc.get_select('SELECT DISTINCT * FROM objects')
         df["n_grid_coordinate_x"] = df["n_grid_coordinate_x"].astype(int)
         df["n_grid_coordinate_y"] = df["n_grid_coordinate_y"].astype(int)
         # transpose dataframe to be usable as dictionary
         data_transposed_as_dict = df.transpose().to_dict()
         # create a list with each object
-        ergebnis = [data_transposed_as_dict.get(i) for i in data_transposed_as_dict.keys()]
+        tmp_result = [data_transposed_as_dict.get(i) for i in data_transposed_as_dict.keys()]
 
         # fetch amount of rows and seats in each row
         ys = int(max(df.n_grid_coordinate_y.unique()))
         xs = int(max(df.n_grid_coordinate_x.unique()))
 
-        endergebnis = []
+        result = []
         for y in range(1, ys + 1):
             # print("Reihe:",y)
-            subliste = []
+            sublist = []
             for x in range(1, xs + 1):
-                vorhanden = False
+                is_free = False
                 # print("Platz", x)
-                for o in ergebnis:
+                for o in tmp_result:
                     if o.get('n_grid_coordinate_y') == y and o.get('n_grid_coordinate_x') == x:
                         # print("Found", o)
-                        vorhanden = True
-                        subliste.append(o)
-                if vorhanden is False:
+                        is_free = True
+                        sublist.append(o)
+                if is_free is False:
                     # print(f"{x} war nicht vorhanden")
                     filler_dict = {'n_object_id': f"filler_object_{x}_{y}", 'n_object_type': 2,
                                    'n_grid_coordinate_x': x, 'n_grid_coordinate_y': y, 'n_grid_coordinate_z': 1.0,
                                    'arr_equipment': [], 'n_status_id': 4,
                                    'ts_last_change': 'now'}
-                    subliste.append(filler_dict)
+                    sublist.append(filler_dict)
 
-            endergebnis.append(subliste)
+            result.append(sublist)
 
-        return endergebnis
+        return result
 
     def get_counter(self):
         ctr_occupied_workstations = self.dbc.get_select(
