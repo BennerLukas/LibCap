@@ -14,10 +14,16 @@ app.secret_key = '5uY4^$u!%lWlAk%3DkM2iL9^!DtJqfyduTc4pyA1uv9JG5ud!Ew@@dsa5'
 
 @app.route('/')  # Home
 def index():
+    # 14 total
+    # 10 freie
+    # 4 belegt
+    #
     occupancy_rate = backend.get_auslastung()
     ctr_occupied_workstations, ctr_available_workstations, ctr_maintenance_workstations, ctr_total_workstations = backend.get_counter()
     objects_grouped = backend.get_sitzplaetze()
     workstations = backend.get_workstations()
+    current_usage = round(((ctr_occupied_workstations + ctr_maintenance_workstations) / ctr_total_workstations) * 100, 1)
+    timeseries_forecast = backend.get_timeseries_forecast()
     return render_template("/index.html",
                            auslastungs_liste=occupancy_rate,
                            ctr_occupied_workstations=ctr_occupied_workstations,
@@ -25,7 +31,9 @@ def index():
                            ctr_maintenance_workstations=ctr_maintenance_workstations,
                            ctr_total_workstations=ctr_total_workstations,
                            objects=objects_grouped,
-                           workstations=workstations
+                           workstations=workstations,
+                           current_usage=current_usage,
+                           timeseries_forecast=timeseries_forecast
                            )
 
 

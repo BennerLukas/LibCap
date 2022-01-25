@@ -125,6 +125,23 @@
         </div>
     </section><!-- End About Section -->
 
+     <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+        <div class="container" data-aos="zoom-in">
+
+            <div class="text-center">
+                <h3>Add a new Controller</h3>
+                <p>
+                    You want to add a new Workstation? Just generate a new virtual entry and install the physical
+                    microcontroller.
+                </p>
+                <a class="cta-btn" href="#add">Add Controller</a>
+            </div>
+
+        </div>
+    </section><!-- End Cta Section -->
+
+
     <!-- ======= Services Section ======= -->
     <section id="overview" class="services">
         <div class="container">
@@ -135,6 +152,78 @@
                     Get a quick overview about the current state of the usage and the kinds of workstations.
                 </p>
             </div>
+            <!-- Bar Chart -->
+            <div id="gaugechart" style="min-height: 400px;" class="echart mt-5">
+
+            </div>
+            <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              echarts.init(document.querySelector("#gaugechart")).setOption({
+                   title: {
+                      text: "Current Occupancy Rate",
+                      left: "center"
+                  },
+                  series: [
+                      {
+                          itemStyle: {
+                              color: "#7bbad7"
+                          },
+                          type: 'gauge',
+                          progress: {
+                              show: true,
+                              width: 18
+                          },
+                          axisLine: {
+                              lineStyle: {
+                                  width: 18,
+                                  color: '#7bbad7'
+                              }
+                          },
+                          axisTick: {
+                              show: false
+                          },
+                          splitLine: {
+                              length: 15,
+                              lineStyle: {
+                                  width: 2,
+                                  color: '#7bbad7'
+                              }
+                          },
+                          axisLabel: {
+                              distance: 25,
+                              color: '#7bbad7',
+                              fontSize: 10,
+                              formatter: '{value} %'
+                          },
+                          anchor: {
+                              show: true,
+                              showAbove: true,
+                              size: 25,
+                              itemStyle: {
+                                  color: "#7bbad7",
+                                  borderWidth: 0,
+                              }
+                          },
+                          title: {
+                              show: true,
+                              text: "Current Occupancy Rate"
+                          },
+                          detail: {
+                              valueAnimation: true,
+                              fontSize: 30,
+                              offsetCenter: [0, '70%'],
+                              formatter: '{value}%'
+                          },
+                          data: [
+                              {
+                                  value: {{ current_usage }},
+                              }
+
+                          ]
+                      }]
+                    });
+            });
+          </script>
 
             <div class="row">
                 <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
@@ -168,12 +257,41 @@
                         <p class="description">These Workstations have reading lights for long sessions in the evening.</p>
                     </div>
                 </div>
-
-
             </div>
 
+          <!-- Bar Chart -->
 
-        </div>
+          <div id="barChart" style="min-height: 400px;" class="echart mt-5"></div>
+
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              echarts.init(document.querySelector("#barChart")).setOption({
+                  title: {
+                      text: "Average Weekly Rate",
+                      left: "center"
+                  },
+                xAxis: {
+                  type: 'category',
+                  data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                  name: "Day"
+                },
+                yAxis: {
+                  type: 'value',
+                  name: "Avg. Occupancy Rate",
+                  axisLabel: {
+                    formatter: '{value} %'
+      }
+                },
+                series: [{
+                  data: {{ timeseries_forecast }},
+                  type: 'bar',
+                  itemStyle: {color: '#7bbad7'},
+                }]
+              });
+            });
+          </script>
+          <!-- End Bar Chart -->
+         </div>
     </section><!-- End Services Section -->
 
     <!-- ======= Counts Section ======= -->
@@ -188,17 +306,7 @@
                         <span data-purecounter-start="0" data-purecounter-end="{{ ctr_total_workstations }}"
                               data-purecounter-duration="1"
                               class="purecounter"></span>
-                        <p>Number of<strong>total Workstations</strong></p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
-                    <div class="count-box">
-                        <i class="bi bi-tools"></i>
-                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_maintenance_workstations }}"
-                              data-purecounter-duration="1"
-                              class="purecounter"></span>
-                        <p>Number of Workstations in <strong>Maintenance</strong></p>
+                        <p>Number of <strong>total Workstations</strong></p>
                     </div>
                 </div>
 
@@ -222,26 +330,22 @@
                     </div>
                 </div>
 
+                <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+                    <div class="count-box">
+                        <i class="bi bi-tools"></i>
+                        <span data-purecounter-start="0" data-purecounter-end="{{ ctr_maintenance_workstations }}"
+                              data-purecounter-duration="1"
+                              class="purecounter"></span>
+                        <p>Number of Workstations in <strong>Maintenance</strong></p>
+                    </div>
+                </div>
+
             </div>
 
         </div>
     </section><!-- End Counts Section -->
 
-    <!-- ======= Cta Section ======= -->
-    <section id="cta" class="cta">
-        <div class="container" data-aos="zoom-in">
 
-            <div class="text-center">
-                <h3>Add a new Controller</h3>
-                <p>
-                    You want to add a new Workstation? Just generate a new virtual entry and install the physical
-                    microcontroller.
-                </p>
-                <a class="cta-btn" href="#add">Add Controller</a>
-            </div>
-
-        </div>
-    </section><!-- End Cta Section -->
 
     <!-- ======= Dashboard Section ======= -->
     <section id="dashboard" class="portfolio">
@@ -619,7 +723,7 @@
                             <div class="sent-message">Your message has been sent. Thank you!</div>
                         </div>
                         <div class="text-center">
-                            <button type="submit">Send Message</button>
+                            <button class="btn btn-primary" type="submit">Send Message</button>
                         </div>
                     </form>
                 </div>
@@ -659,6 +763,8 @@
 <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 <script src="static/assets/vendor/swiper/swiper-bundle.min.js"></script>
 <script src="static/assets/vendor/php-email-form/validate.js"></script>
+<script src="static/assets/vendor/echarts/echarts.min.js"></script>
+
 
 <!-- Template Main JS File -->
 <script src="static/assets/js/main.js"></script>

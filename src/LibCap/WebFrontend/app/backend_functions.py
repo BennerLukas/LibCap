@@ -128,3 +128,11 @@ class Backend:
         sql_string = f"DELETE FROM objects WHERE n_object_id = {workstation_id};"
         _, result = self.dbc.execute_sql(sql_string)
         return bool
+
+    def get_timeseries_forecast(self):
+
+        weekly_list = [10, 20, 30, 40, 50, 60, 70]
+
+        return weekly_list
+
+
