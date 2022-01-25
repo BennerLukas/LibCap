@@ -43,6 +43,7 @@ class DatabaseConnector:
             except Exception as an_exception:
                 logging.error(an_exception)
                 logging.error("Not connected to DB")
+                self.hostname = "localhost"
                 time.sleep(5)
         return True
 

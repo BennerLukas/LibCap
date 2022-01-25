@@ -305,7 +305,22 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Row: {{ object['n_grid_coordinate_y'] }}</li>
                             <li class="list-group-item">Column: {{ object['n_grid_coordinate_x'] }}</li>
-                            <li class="list-group-item">Equipment: {{ object['arr_equipment'] }}</li>
+                            <li class="list-group-item">
+                                 Equipment:
+                                <div class="icon">
+                                {% for equip in object['arr_equipment'] %}
+                                    {% if equip == 'Ethernet'  %}
+                                        <i class="bi bi-ethernet"></i>
+                                    {% elif equip == 'Lamp'  %}
+                                        <i class="bi bi-lamp"></i>
+                                    {% elif equip == 'PC'  %}
+                                        <i class="bi bi-pc-display"></i>
+                                    {% elif equip == 'Plug'  %}
+                                        <i class="bi bi-plug"></i>
+                                    {% endif %}
+                                {% endfor %}
+                                </div>
+                            </li>
                         </ul>
                         <form action="/reserve_seat" method="post">
                             {% if object['n_status_id'] == 1 %}
@@ -371,7 +386,7 @@
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value=3>
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value=5>
                             <label class="form-check-label" for="gridRadios3">
                                 Reserved
                             </label>
@@ -427,7 +442,7 @@
             <div id="close" class="container">
                 {% for message in get_flashed_messages() %}
                 <div class="alert alert-warning">
-                    <button onclick="closeMessage()" type="button" class="close" data-dismiss="alert">&times;</button>
+                    <button class="btn btn-secondary" onclick="closeMessage()" type="button" class="close" data-dismiss="alert">&times;</button>
                     {{ message }}
                 </div>
                 {% endfor %}
@@ -435,6 +450,102 @@
         </div>
     </section><!-- End Testimonials Section -->
 
+
+     <!-- ======= Add Controller Section ======= -->
+    <section id="manage" class="testimonials section-bg">
+        <div class="container">
+
+            <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+                <h2>Manage Controller</h2>
+                <p>
+                    Delete or update existing controllers and their equipment
+                </p>
+            </div>
+
+            <form action="/manage_controller" method="post">
+                <div class="row mb-3">
+                    <select class="form-select" aria-label="Default select example" name="workstation">
+<!--                                    <option selected>Open this select menu</option>-->
+                                    {% for workstation in workstations %}
+                                    <option value="{{ workstation['id'] }}">{{ workstation['label'] }}</option>
+                                    {% endfor %}
+                                </select>
+                    <br>
+                </div>
+                <fieldset class="row mb-3">
+                    <legend class="col-form-label col-sm-2 pt-0">Default State</legend>
+                    <div class="col-sm-8">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="state" id="gridRadios11" value=1
+                                   checked>
+                            <label class="form-check-label" for="gridRadios11">
+                                Free
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="state" id="gridRadios12" value=2>
+                            <label class="form-check-label" for="gridRadios12">
+                                Occupied
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="state" id="gridRadios13" value=5>
+                            <label class="form-check-label" for="gridRadios13">
+                                Reserved
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="state" id="gridRadios14" value=4>
+                            <label class="form-check-label" for="gridRadios14">
+                                Maintenance
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"style="text-align:right">
+                        <button type="submit" name="button" value="update_status" class="btn btn-primary" >Update Status</button>
+                    </div>
+                </fieldset>
+                <fieldset class="row mb-3">
+                    <legend class="col-form-label col-sm-2 pt-0">Equipment</legend>
+                    <div class="col-sm-8">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="ethernet" id="gridCheck11">
+                            <label class="form-check-label" for="gridCheck11">
+                                Ethernet
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="lamp" id="gridCheck12">
+                            <label class="form-check-label" for="gridCheck12">
+                                Lamp
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="plug" id="gridCheck13">
+                            <label class="form-check-label" for="gridCheck13">
+                                Power Plug
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="pc" id="gridCheck14">
+                            <label class="form-check-label" for="gridCheck14">
+                                PC
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"style="text-align:right">
+                        <button type="submit" name="button" value="update_equipment" class="btn btn-primary ">Update Equipment</button>
+                    </div>
+
+                </fieldset>
+                <div class="text-center">
+                    <button type="submit" name="button" value="delete" class="btn btn-primary">Delete Controller</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </form>
+
+        </div>
+    </section><!-- End Testimonials Section -->
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact section-bg">

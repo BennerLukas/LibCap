@@ -8,14 +8,21 @@ class Backend:
         self.dbc = database_connector
         self.user = None
 
-    def add_controller_to_database(self, param_list) -> int:
+    def _prep_param_list(self, param_list):
+        print(param_list)
         equipment_list = ["Ethernet", "Lamp", "Plug", "PC"]
         bool_conversion = {"on": True, "off": False}
-        equipment_list_bool = [bool_conversion.get(param_list.get("Ethernet")), bool_conversion.get(param_list.get("Lamp")),
+        equipment_list_bool = [bool_conversion.get(param_list.get("Ethernet")),
+                               bool_conversion.get(param_list.get("Lamp")),
                                bool_conversion.get(param_list.get("Plug")), bool_conversion.get(param_list.get("PC"))]
         equipment_list_decoded = ["'" + str(equipment) + "'" for index, equipment in enumerate(equipment_list) if
                                   equipment_list_bool[index]]
         equipment_list_str = ",".join(equipment_list_decoded)
+        return equipment_list_str
+
+    def add_controller_to_database(self, param_list) -> int:
+
+        equipment_list_str = self._prep_param_list(param_list)
 
         sql_string = f"""
         INSERT INTO OBJECTS(
@@ -28,7 +35,7 @@ class Backend:
             {param_list.get("object_type", 1)},
             {param_list.get("x")},
             {param_list.get("y")},
-            ARRAY [{equipment_list_str}],
+            ARRAY [{equipment_list_str}]::varchar[],
             {param_list.get("status")})
         RETURNING n_object_id;
         
@@ -53,11 +60,11 @@ class Backend:
         ergebnis = [data_transposed_as_dict.get(i) for i in data_transposed_as_dict.keys()]
 
         # fetch amount of rows and seats in each row
-        ys = sorted(df.n_grid_coordinate_y.unique())
+        ys = int(max(df.n_grid_coordinate_y.unique()))
         xs = int(max(df.n_grid_coordinate_x.unique()))
 
         endergebnis = []
-        for y in ys:
+        for y in range(1, ys + 1):
             # print("Reihe:",y)
             subliste = []
             for x in range(1, xs + 1):
@@ -81,8 +88,43 @@ class Backend:
         return endergebnis
 
     def get_counter(self):
-        ctr_occupied_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 2 OR n_status_id = 3 AND n_object_type = 1").iat[0, 0]
-        ctr_available_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1 AND n_object_type = 1").iat[0, 0]
-        ctr_maintenance_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 4 AND n_object_type = 1").iat[0, 0]
-        ctr_total_workstations = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_object_type = 1").iat[0, 0]
+        ctr_occupied_workstations = self.dbc.get_select(
+            f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 2 OR n_status_id = 3 AND n_object_type = 1").iat[
+            0, 0]
+        ctr_available_workstations = \
+        self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1 AND n_object_type = 1").iat[
+            0, 0]
+        ctr_maintenance_workstations = \
+        self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 4 AND n_object_type = 1").iat[
+            0, 0]
+        ctr_total_workstations = \
+        self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_object_type = 1").iat[0, 0]
         return ctr_occupied_workstations, ctr_available_workstations, ctr_maintenance_workstations, ctr_total_workstations
+
+    def get_workstations(self):
+        # id, label
+
+        df = self.dbc.get_select(
+            f"SELECT n_object_id, n_grid_coordinate_x, n_grid_coordinate_y FROM OBJECTS WHERE n_object_type = 1;")
+        df = df.sort_values("n_object_id")
+        workstations = [{"id": df.iloc[i, 0], "label": f"{df.iloc[i,0]} (X: {int(df.iloc[i,1])} Y: {int(df.iloc[i,2])})"} for i in range(len(df.index))]
+        return workstations
+
+    def update_status(self, workstation_id, state):
+        sql_string = f"UPDATE OBJECTS SET n_status_id = {state} WHERE n_object_id = {workstation_id};"
+        _, result = self.dbc.execute_sql(sql_string)
+        return bool
+
+    def update_equipment(self, workstation_id, equipment):
+
+        equipment_list_str = self._prep_param_list(equipment)
+        print(equipment_list_str)
+
+        sql_string = f"UPDATE OBJECTS SET arr_equipment = ARRAY [{equipment_list_str}]::varchar[] WHERE n_object_id = {workstation_id};"
+        _, result = self.dbc.execute_sql(sql_string)
+        return bool
+
+    def delete(self, workstation_id):
+        sql_string = f"DELETE FROM objects WHERE n_object_id = {workstation_id};"
+        _, result = self.dbc.execute_sql(sql_string)
+        return bool

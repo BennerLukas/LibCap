@@ -4,7 +4,17 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
+.nav-link:focus, .nav-link:hover {
+  color: #7bbad7;
+}
 
+
+.btn-primary:focus {
+  color: #fff;
+  background-color: #7bbad7;
+  border-color: #7bbad7;
+  box-shadow: 0 0 0 .25rem rgba(49, 132, 253, .5);
+}
 .btn-primary:hover {
   border-color: #7bbad7;
   background-color: #7bbad7;

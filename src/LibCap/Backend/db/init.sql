@@ -33,7 +33,8 @@ CREATE TABLE OBJECTS (
     n_status_id int NOT NULL DEFAULT 0,
     ts_last_change timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (n_object_id),
-    FOREIGN KEY (n_status_id) REFERENCES CURRENT_STATUS (n_status_id)
+    FOREIGN KEY (n_status_id) REFERENCES CURRENT_STATUS (n_status_id),
+    UNIQUE (n_grid_coordinate_x, n_grid_coordinate_y, n_grid_coordinate_z)
     /*Lookup status in CURRENT_STATUS*/
 );
 
@@ -43,7 +44,7 @@ CREATE TABLE STATUS_HISTORY (
     n_status_id int NOT NULL,
     ts_timestamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (n_id),
-    FOREIGN KEY (n_object_id) REFERENCES OBJECTS (n_object_id),
+    FOREIGN KEY (n_object_id) REFERENCES OBJECTS (n_object_id)  ON DELETE CASCADE,
     FOREIGN KEY (n_status_id) REFERENCES CURRENT_STATUS (n_status_id)
 );
 
