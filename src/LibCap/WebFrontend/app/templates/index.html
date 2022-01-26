@@ -430,7 +430,7 @@
                             {% if object['n_status_id'] == 1 %}
                             <button type="submit" class="btn btn-primary">Reserve seat</button>
                             {% else %}
-                            <button type="submit" class="btn btn-primary" disabled>Reserve seat</button>
+                            <button type="submit" class="btn btn-secondary" disabled>Reserve seat</button>
                             {% endif %}
                             <input type="text" id="{{ object['n_object_id'] }}" name="seat_id" value="{{ object['n_object_id'] }}" style="display: none">
                         </form>
