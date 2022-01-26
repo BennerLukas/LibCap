@@ -1,7 +1,7 @@
 services:
   web:
-    image: bennerlukas/libcap_web:libcap
-#    build: src/LibCap/WebFrontend/.
+#    image: bennerlukas/libcap_web:libcap
+    build: src/LibCap/WebFrontend/.
     ports:
       - "5000:5000"
     depends_on:
@@ -41,8 +41,8 @@ services:
     restart: always
 
   backend:
-    image: bennerlukas/libcap_backend:libcap
-#    build: src/LibCap/Backend/.
+#    image: bennerlukas/libcap_backend:libcap
+    build: src/LibCap/Backend/.
     depends_on:
       - mosquitto
       - database

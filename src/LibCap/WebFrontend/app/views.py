@@ -37,6 +37,11 @@ def index():
                            )
 
 
+@app.post('/refresh_dashboard')
+def refresh_dashboard():
+    return redirect(url_for('index') + '#dashboard')
+
+
 @app.post('/execute_add_controller')
 def execute_add_controller():
     param_list = {"x": request.form['inputX'],
