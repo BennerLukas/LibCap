@@ -53,7 +53,7 @@ void onConnectionEstablished()
   Serial.println("connected to mqtt\n");    //lambda payload: payload....
   client.subscribe(sub_topic, [](const String & payload) {
     Serial.println(payload);
-    if (payload == "true") {
+     if (payload == "1" || payload == "2") {
       occupied = true;
     }
     else {
