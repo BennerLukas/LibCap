@@ -25,7 +25,9 @@ class Backend:
         equipment_list_str = self._prep_param_list(param_list)
 
         # test if object already exists
-        result = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_grid_coordinate_x = {param_list.get('x')} AND n_grid_coordinate_y = {param_list.get('y')}").iat[0, 0]
+        result = self.dbc.get_select(
+            f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_grid_coordinate_x = {param_list.get('x')} AND n_grid_coordinate_y = {param_list.get('y')}").iat[
+            0, 0]
         if result == 1:
             # already in use
             return None
@@ -50,7 +52,8 @@ class Backend:
         return result
 
     def get_occupancy(self) -> List[int]:
-        number_available = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1").iat[0, 0]
+        number_available = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1").iat[
+            0, 0]
         number_occupied = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 2").iat[0, 0]
         number_reserved = self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 3").iat[
             0, 0]
@@ -95,16 +98,18 @@ class Backend:
 
     def get_counter(self):
         ctr_occupied_workstations = self.dbc.get_select(
-            f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 2 OR n_status_id = 3 AND n_object_type = 1").iat[
+            f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 2 OR n_status_id = 3 OR n_status_id = 5 AND n_object_type = 1").iat[
             0, 0]
         ctr_available_workstations = \
-        self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1 AND n_object_type = 1").iat[
-            0, 0]
+            self.dbc.get_select(
+                f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 1 AND n_object_type = 1").iat[
+                0, 0]
         ctr_maintenance_workstations = \
-        self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 4 AND n_object_type = 1").iat[
-            0, 0]
+            self.dbc.get_select(
+                f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_status_id = 4 AND n_object_type = 1").iat[
+                0, 0]
         ctr_total_workstations = \
-        self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_object_type = 1").iat[0, 0]
+            self.dbc.get_select(f"SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_object_type = 1").iat[0, 0]
         return ctr_occupied_workstations, ctr_available_workstations, ctr_maintenance_workstations, ctr_total_workstations
 
     def get_workstations(self):
@@ -113,7 +118,9 @@ class Backend:
         df = self.dbc.get_select(
             f"SELECT n_object_id, n_grid_coordinate_x, n_grid_coordinate_y FROM OBJECTS WHERE n_object_type = 1;")
         df = df.sort_values("n_object_id")
-        workstations = [{"id": df.iloc[i, 0], "label": f"{df.iloc[i,0]} (X: {int(df.iloc[i,1])} Y: {int(df.iloc[i,2])})"} for i in range(len(df.index))]
+        workstations = [
+            {"id": df.iloc[i, 0], "label": f"{df.iloc[i, 0]} (X: {int(df.iloc[i, 1])} Y: {int(df.iloc[i, 2])})"} for i
+            in range(len(df.index))]
         return workstations
 
     def update_status(self, workstation_id, state):
@@ -135,9 +142,8 @@ class Backend:
         _, result = self.dbc.execute_sql(sql_string)
         return bool
 
-    
     def get_timeseries_forecast(self):
-        #SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_object_type = 1
+        # SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_object_type = 1
         ts_available_workstations = self.get_counter()[3]
         _, ts_status_history = self.dbc.execute_sql(f'''
                                                     SELECT (AVG(n_occupied_objects)/{ts_available_workstations}::float)*100 as n_occupancy_rate, date_part('isodow', ts_weekday)
@@ -149,13 +155,14 @@ class Backend:
                                                     ORDER BY ts_weekday) Dayview
                                                     GROUP BY  date_part('isodow', ts_weekday)
                                                     ORDER BY  date_part('isodow', ts_weekday)
-                                                    ''') 
-        weekly_list = [0,0,0,0,0,0,0]
-        
-        for i in ts_status_history:
-            weekly_list[i["date_part"]] = i["n_occupancy_rate"]
-        
+                                                    ''')
+        print(ts_status_history)
+        weekly_list = [0, 0, 0, 0, 0, 0, 0]
 
+        if ts_status_history is not None:
+
+            for i in ts_status_history:
+                weekly_list[int(i[1]) - 1] = i[0]
+
+        print(weekly_list)
         return weekly_list
-
-
