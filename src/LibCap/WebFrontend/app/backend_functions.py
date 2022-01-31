@@ -135,8 +135,23 @@ class Backend:
         _, result = self.dbc.execute_sql(sql_string)
         return bool
 
+    
     def get_timeseries_forecast(self):
-
+        #SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_object_type = 1
+        ts_available_workstations = get_counter()[3]
+        _, ts_status_history = self.dbc.execute_sql(f'''
+                                                    SELECT (SUM(DISTINCT n_object_id)/ {ts_available_workstations}::float)*100 as n_occupied_objects, TO_CHAR(
+                                                            ts_timestamp,
+                                                            'HH24'
+                                                        ) ts_hour
+                                                    FROM "status_history"
+                                                    WHERE n_status_id in (2,3,5)
+                                                    GROUP BY TO_CHAR(
+                                                            ts_timestamp,
+                                                            'HH24'
+                                                        )
+                                                    ''') 
+        
         weekly_list = [10, 20, 30, 40, 50, 60, 70]
 
         return weekly_list

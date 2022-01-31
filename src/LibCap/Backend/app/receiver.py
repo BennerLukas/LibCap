@@ -71,7 +71,7 @@ def status_occupied(entity_id):
         update = engine.execute("UPDATE OBJECTS SET n_status_id = 2 WHERE n_object_id = %s;" % (entity_id))
 
         # print("publishing status")
-        client.publish(f"/lib-cap/occupied/{entity_id}", "true")  # entity subscribes to topic with corresponding id
+        client.publish(f"/lib-cap/occupied/{entity_id}", 1)  # publishes status=occupied to controller
         entity = engine.execute('SELECT * FROM OBJECTS WHERE n_object_id= %s ;' % (entity_id)).fetchall()
         print("New state:", entity)
 
@@ -116,6 +116,13 @@ def check_status():
             history = engine.execute('SELECT * FROM STATUS_HISTORY;').fetchall()
             print(f"history: {history}")
 
+def send_reserved_payload():
+    reserved_entities = engine.execute(
+        'SELECT * FROM OBJECTS WHERE n_status_id = 5 ORDER BY ts_last_change;').fetchall()
+    for entity in reserved_entities:
+        entity_id = entity[0]
+        client.publish(f"/lib-cap/occupied/{entity_id}", 2) #publishes status=reserved to controller
+        
 
 def status_free(entity_id):
     # print current status of object
@@ -135,7 +142,7 @@ def status_free(entity_id):
         entity = engine.execute('SELECT * FROM OBJECTS WHERE n_object_id= %s ;' % (entity_id)).fetchall()
         print("New state:", entity)
         # print("publishing status")
-        client.publish(f"/lib-cap/occupied/{entity_id}", "false")
+        client.publish(f"/lib-cap/occupied/{entity_id}", 0) #publishes status=free to controller
 
 
 connection("LibCap-Backend")
@@ -150,6 +157,7 @@ client.subscribe("/lib-cap/state/#")
 while connected != True or message_received != True:
     time.sleep(4)
     check_status()
+    send_reserved_payload()
 
 client.loop_forever()
 
