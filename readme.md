@@ -1,7 +1,7 @@
 <div align="center">
 <h2>LibCap - Library Capacity Measurement System</h2>
 
-<img src="Docs/LibCap_simple_black.png.png" alt="Logo" width="210" align="center"/>
+<img src="./Docs/LibCap_simple_black.png" alt="Logo" width="210" align="center"/>
 <br>
 </div>
 
@@ -57,7 +57,7 @@ In this project where used quite a lot of new (at least for us) and cutting edge
 The team consists of 4 People. The planing and brainstorming was done in team-meetings with the help of Github's KANBAN Boards.
 We collaborated on all fields and worked together to achieve our goal. Nevertheless we decided on splitting the responsibilities in 4 areas as follows:
 
-- Alina Buss (Research & Controlling)
+- Alina Buss (Research & Theory)
 - Ayman Madhour (Middleware & Timeseries)
 - Philip Lange (Frontend & Container)
 - Lukas Benenr (Hardware & Design)
@@ -73,5 +73,3 @@ Therefore, the system is easily scalable and the components can be switched or e
 
 
 For a quick demonstration see here: https://youtu.be/ml8fKBpgCN8
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ml8fKBpgCN8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
