@@ -140,16 +140,14 @@ class Backend:
         #SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_object_type = 1
         ts_available_workstations = get_counter()[3]
         _, ts_status_history = self.dbc.execute_sql(f'''
-                                                    SELECT (SUM(DISTINCT n_object_id)/ {ts_available_workstations}::float)*100 as n_occupied_objects, TO_CHAR(
-                                                            ts_timestamp,
-                                                            'HH24'
-                                                        ) ts_hour
+                                                    SELECT (AVG(n_occupied_objects)/{ts_available_workstations}::float)*100, date_part('isodow', ts_weekday)
+                                                    FROM
+                                                    (SELECT (COUNT(DISTINCT n_object_id)) as n_occupied_objects, ts_timestamp::date as ts_weekday
                                                     FROM "status_history"
                                                     WHERE n_status_id in (2,3,5)
-                                                    GROUP BY TO_CHAR(
-                                                            ts_timestamp,
-                                                            'HH24'
-                                                        )
+                                                    GROUP BY ts_timestamp::date
+                                                    ORDER BY ts_weekday) Dayview
+                                                    GROUP BY  date_part('isodow', ts_weekday)
                                                     ''') 
         
         weekly_list = [10, 20, 30, 40, 50, 60, 70]
