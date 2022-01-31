@@ -138,9 +138,9 @@ class Backend:
     
     def get_timeseries_forecast(self):
         #SELECT COUNT(n_object_id) FROM OBJECTS WHERE n_object_type = 1
-        ts_available_workstations = get_counter()[3]
+        ts_available_workstations = self.get_counter()[3]
         _, ts_status_history = self.dbc.execute_sql(f'''
-                                                    SELECT (AVG(n_occupied_objects)/{ts_available_workstations}::float)*100, date_part('isodow', ts_weekday)
+                                                    SELECT (AVG(n_occupied_objects)/{ts_available_workstations}::float)*100 as n_occupancy_rate, date_part('isodow', ts_weekday)
                                                     FROM
                                                     (SELECT (COUNT(DISTINCT n_object_id)) as n_occupied_objects, ts_timestamp::date as ts_weekday
                                                     FROM "status_history"
@@ -148,9 +148,13 @@ class Backend:
                                                     GROUP BY ts_timestamp::date
                                                     ORDER BY ts_weekday) Dayview
                                                     GROUP BY  date_part('isodow', ts_weekday)
+                                                    ORDER BY  date_part('isodow', ts_weekday)
                                                     ''') 
+        weekly_list = [0,0,0,0,0,0,0]
         
-        weekly_list = [10, 20, 30, 40, 50, 60, 70]
+        for i in ts_status_history:
+            weekly_list[i["date_part"]] = i["n_occupancy_rate"]
+        
 
         return weekly_list
 
