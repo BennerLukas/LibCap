@@ -6,7 +6,7 @@
 </div>
 
 ## Usage
-You need to have docker installed and execute the docker-compose.yml
+You need to have docker installed and execute the docker-compose.yml by doing the following:
 
 ```bash
 docker compose up --build --force-recreate
