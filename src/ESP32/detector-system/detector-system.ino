@@ -1,4 +1,4 @@
-//#include <ctime>
+ //#include <ctime>
 #include <iostream>
 #include <EspMQTTClient.h>
 
@@ -6,9 +6,9 @@
 #define RED_LED 14
 #define GREEN_LED 13
 
-const char* sub_topic = "/lib-cap/occupied/1";
-const char* pub_topic = "/lib-cap/state/1";
-const char* controler_name = "esp32-01";
+const char* sub_topic = "/lib-cap/occupied/3";
+const char* pub_topic = "/lib-cap/state/3";
+const char* controler_name = "esp32-03";
 const char* broker_ip =  "192.168.4.254";
 const char* wifi_name = "Kaer Morhen";
 const char* wifi_pwd = "3Hexerhexen";

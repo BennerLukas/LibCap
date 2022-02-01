@@ -1,6 +1,5 @@
 import datetime
 import logging
-import werkzeug
 from flask import render_template, redirect, abort, send_file, request, session, flash, url_for
 from app import app
 from app.db_connector import DatabaseConnector
@@ -14,10 +13,7 @@ app.secret_key = '5uY4^$u!%lWlAk%3DkM2iL9^!DtJqfyduTc4pyA1uv9JG5ud!Ew@@dsa5'
 
 @app.route('/')  # Home
 def index():
-    # 14 total
-    # 10 freie
-    # 4 belegt
-    #
+    # get all information needed for frontend by calling backend functions
     occupancy_rate = backend.get_occupancy()
     ctr_occupied_workstations, ctr_available_workstations, ctr_maintenance_workstations, ctr_total_workstations = backend.get_counter()
     objects_grouped = backend.get_dashboard_infos()
@@ -39,11 +35,13 @@ def index():
 
 @app.post('/refresh_dashboard')
 def refresh_dashboard():
+    # redirects back to dashboard to simulate dynamically refreshing the page
     return redirect(url_for('index') + '#dashboard')
 
 
 @app.post('/execute_add_controller')
 def execute_add_controller():
+    # fetch all params of the html form sent in HTML post
     param_list = {"x": request.form['inputX'],
                   "y": request.form['inputY'],
                   "status": request.form['gridRadios'],
@@ -51,8 +49,13 @@ def execute_add_controller():
                   "Lamp": request.form.get('gridCheck2', "off"),
                   "Plug": request.form.get('gridCheck3', "off"),
                   "PC": request.form.get('gridCheck4', "off")}
+
+    # adds a new controller with the param_list
     new_id = backend.add_controller_to_database(param_list)
+
+    # if result of controller add is None, the place is already occupied
     if new_id is None:
+        # flash is used to create message on the webpage
         flash(f"No controller added. Place already used!")
     else:
         flash(f"New controller with id {new_id[0][0]} added!")
@@ -61,11 +64,15 @@ def execute_add_controller():
 
 @app.post('/reserve_seat')
 def reserve_seat():
+    # gets the seat_id from the request form
     seat_id = request.form.get('seat_id')
+    # formats current time so that it can be used for SQL
     time_formatted = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    # updates the workstation with seat_id to be status 5 (reserved)
     sql_string = f"UPDATE OBJECTS SET n_status_id = 5, ts_last_change='{time_formatted}' WHERE n_object_id={seat_id}"
     dbc.execute_sql(sql_string)
     logging.info(f"Reserved {seat_id} until {time_formatted}")
+    # returns the user back to the dashboard
     return redirect(url_for('index') + '#dashboard')
 
 
