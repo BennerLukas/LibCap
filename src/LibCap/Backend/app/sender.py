@@ -1,5 +1,4 @@
-# Code Written By Tech Notebook
-# youtube.com/technotebook
+# Code for Debug
 
 import paho.mqtt.client as mqtt
 import time
@@ -31,14 +30,17 @@ client.connect(broker_address)
 time.sleep(0.4)
 client.loop_start()
 testnum = 0
-client.subscribe("/lib-cap/occupied/1")
+client.subscribe("/lib-cap/occupied/2")
 while True:
-    client.publish("/lib-cap/state/1", 1)
+    client.publish("/lib-cap/state/2", 1)
     print("Publishing... ", 1)
     testnum += 1
     time.sleep(3)
+    client.publish("/lib-cap/state/2", 0)
+    print("Publishing... ", 0)
+    time.sleep(16)
+    client.publish("/lib-cap/state/2", 1)
+    print("Publishing... ", 1)
+
 
 client.loop_stop()
-
-# Code Written By Tech Notebook
-# youtube.com/technotebook

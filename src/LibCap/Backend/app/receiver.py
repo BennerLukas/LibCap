@@ -9,14 +9,6 @@ message_received = False
 broker_address = "mosquitto"
 
 
-def on_message(client, userdata, message):
-    topic = message.topic
-    message = str(message.payload.decode("utf-8"))
-    print(f"[Topic: {topic}] Message: {message}")
-    interpret_payload(message, topic)
-    message_received = True
-
-
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         global connected
@@ -27,7 +19,24 @@ def on_connect(client, userdata, flags, rc):
         print("Unable To Connect")
 
 
+def on_message(client, userdata, message):
+    """
+        Catches incoming messages of published Topics
+        and passes them on to interpret_payload()
+    """
+    topic = message.topic
+    message = str(message.payload.decode("utf-8"))
+    print(f"[Topic: {topic}] Message: {message}")
+    interpret_payload(message, topic)
+    message_received = True
+
+
 def connection(client_name):
+    """
+        Establishes connection to mqtt broker and 
+        assigns functions for new messages/connec-
+        tion.
+    """    
     global client
     client = mqtt.Client(client_name)
 
@@ -39,10 +48,16 @@ def connection(client_name):
 
 
 def interpret_payload(message, topic):
+    """
+        Interprets payload. Sensor sends motion 
+        data. 1 is "motion detected" and 2 is 
+        "no motion detected".
+        
+        A new motion kicks off status_occupied()
+        and no motion activates the grace period.
+    """
     entity_id = topic.split("/")[-1]  # e.g.: 1
     if int(message) == 1:
-        # motion detected -> trigger occupied
-        # set timestamp to 10h --> Not needed anymore
         status_occupied(entity_id)
 
     if int(message) == 0:
@@ -57,6 +72,12 @@ def interpret_payload(message, topic):
 
 
 def status_occupied(entity_id):
+    """
+        Sets the status of the sending entity to 2
+        (occupied).
+        Confirms changes to the sensor via publishing
+        1 to /lib-cap/occupied/id.
+    """
     # print current status of object
     entity = engine.execute('SELECT * FROM OBJECTS WHERE n_object_id= %s ;' % (entity_id)).fetchall()
     print("Current state:", entity)
@@ -77,6 +98,11 @@ def status_occupied(entity_id):
 
 
 def status_grace_period(entity_id):
+    """
+        Starts the grace period. The entity/seat
+        will remain occupied (status 3) for the
+        duration of the grace period.
+    """
     # change status of entity
     entity = engine.execute('SELECT * FROM OBJECTS WHERE n_object_id= %s ;' % (entity_id)).fetchall()
     print("Current state:", entity)
@@ -96,35 +122,40 @@ def status_grace_period(entity_id):
 
 
 def check_status():
-    # query db for timestamp of entity
+    """
+        Periodically checks the if grace 
+        period is over. If it's over then
+        the entity/seat will be set free.
+    """
     print("Checking")
+    
+    # query db for timestamp of entity
     grace_period_entities = engine.execute(
         'SELECT * FROM OBJECTS WHERE n_status_id = 3 OR n_status_id = 5 ORDER BY ts_last_change;').fetchall()
     current_time = datetime.datetime.utcnow()
     for entity in grace_period_entities:
         entity_id = entity[0]
         entity_timestamp = entity[-1]
-        time_delta = current_time - entity_timestamp  # datetime.timedelta(seconds=14400)
+        time_delta = current_time - entity_timestamp 
         time_delta = time_delta.seconds
         print(f"Current:{current_time}")
         print(f"Current:{entity_timestamp}")
         print(f"{entity_id}: delta = {time_delta}")
 
-        # check timestamp difference --> if greater than 5 min --> purge
+        # check timestamp difference --> if greater than n min --> purge
         if time_delta > 15:  # 5 * 60 sec
             status_free(entity_id)
             history = engine.execute('SELECT * FROM STATUS_HISTORY;').fetchall()
             print(f"history: {history}")
 
-def send_reserved_payload():
-    reserved_entities = engine.execute(
-        'SELECT * FROM OBJECTS WHERE n_status_id = 5 ORDER BY ts_last_change;').fetchall()
-    for entity in reserved_entities:
-        entity_id = entity[0]
-        client.publish(f"/lib-cap/occupied/{entity_id}", 2) #publishes status=reserved to controller
-        
 
 def status_free(entity_id):
+    """
+        Changes the status of the entity to 1
+        (free).
+        Confirms to the esp32 that the seat is
+        now free via publish to lib-cap/occupied/id.
+    """    
     # print current status of object
     entity = engine.execute('SELECT * FROM OBJECTS WHERE n_object_id= %s ;' % (entity_id)).fetchall()
     print("Current state:", entity)
@@ -145,12 +176,27 @@ def status_free(entity_id):
         client.publish(f"/lib-cap/occupied/{entity_id}", 0) #publishes status=free to controller
 
 
+def send_reserved_payload():
+    """
+        Periodically checks if any entity/seat
+        has been booked. 
+        Confirms to esp32 that seat is reserved
+        via publish to /lib-cap/occupied/id.
+    """
+    reserved_entities = engine.execute(
+        'SELECT * FROM OBJECTS WHERE n_status_id = 5 ORDER BY ts_last_change;').fetchall()
+    for entity in reserved_entities:
+        entity_id = entity[0]
+        client.publish(f"/lib-cap/occupied/{entity_id}", 2) #publishes status=reserved to controller
+        
+
+
 connection("LibCap-Backend")
 
 client.loop_start()
 
 print("Subscribing to topic")
-# client.subscribe("/lib-cap/+/state")
+
 client.subscribe("/lib-cap/state/#")
 
 # wait for message or connection
@@ -161,6 +207,3 @@ while connected != True or message_received != True:
 
 client.loop_forever()
 
-# code for shell
-# A '#' character represents a complete sub-tree of the hierarchy and thus must be the last character in a subscription topic string, such as SENSOR/#. This will match any topic starting with SENSOR/, such as SENSOR/1/TEMP and SENSOR/2/HUMIDITY.
-# A '+' character represents a single level of the hierarchy and is used between delimiters. For example, SENSOR/+/TEMP will match SENSOR/1/TEMP and SENSOR/2/TEMP.
