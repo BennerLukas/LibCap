@@ -141,7 +141,7 @@ class DatabaseConnector:
         # fetch all entities in objects
         objects = self.get_select("SELECT * FROM objects")
         # checks if amount of entities returned > 0
-        if len(object.index) > 0:
+        if len(objects.index) > 0:
             self.initialized = True
             return True
         else:

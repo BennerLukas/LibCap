@@ -6,6 +6,20 @@
 </div>
 
 ## Usage
+You need to have docker installed and execute the docker-compose.yml
+
+```bash
+docker compose up --build --force-recreate
+```
+
+or 
+
+```bash
+docker compose up
+```
+
+
+## Manual Testing
 For testing Mosquitto broker locally use this docker container:
 ```bash
  docker run -ti -p 1883:1883 -p 9001:9001 toke/mosquitto

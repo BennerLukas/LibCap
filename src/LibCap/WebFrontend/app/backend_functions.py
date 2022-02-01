@@ -11,7 +11,7 @@ class Backend:
         self.dbc = database_connector
 
     @staticmethod
-    def _prep_param_list(param_list: Dict[str:str]) -> str:
+    def _prep_param_list(param_list: Dict) -> str:
         """
         Converts a dictionary based on a key value pair of equipment string and status string to a string used for SQL.
         :param param_list:
@@ -176,7 +176,7 @@ class Backend:
         return (ctr_occupied_workstations, ctr_available_workstations, ctr_maintenance_workstations,
                 ctr_total_workstations)
 
-    def get_workstations(self) -> List[Dict[str:str]]:
+    def get_workstations(self) -> List:
         """
         Preparatory function to fetch all active workstations with id and location for webpage.
         :return:
