@@ -73,17 +73,21 @@ We collaborated on all fields and worked together to achieve our goal. Neverthel
 
 - Alina Buss (Research & Theory)
 - Ayman Madhour (Middleware & Timeseries)
-- Philip Lange (Frontend & Container)
-- Lukas Benenr (Hardware & Design)
+- Phillip Lange (Frontend & Container)
+- Lukas Benner (Hardware & Design)
 
 # Implementation
 
-LibCap is fully functional Systems on a docker-stack. It can be easily deployed on minimal hardware requirements. 
+LibCap is a fully functional System on a docker-stack. It can be easily deployed on minimal hardware requirements. 
 The system is designed in such way, that the frontend, middleware and hardware can work independently of each other. 
 This is possible due to the use of a MQTT-Broker between the Middleware and the hardware, 
 as well as on strictly not making a direct connection between the frontend and middleware. All communication is over the database.
 
-Therefore, the system is easily scalable and the components can be switched or enhanced without much hustle.
+Therefore, the system is easily scalable and the components can be switched or enhanced without much hassle.
 
 
 For a quick demonstration see here: https://youtu.be/ml8fKBpgCN8
+
+## Documentation and Assignment
+
+The presentation and the assignment is stored within the "Documentation"-Folder. There you can also see the the Live-Demo and the Teaser-Video. 
