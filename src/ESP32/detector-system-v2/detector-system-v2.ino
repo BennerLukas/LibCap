@@ -10,9 +10,9 @@
 const char* sub_topic = "/lib-cap/occupied/1";
 const char* pub_topic = "/lib-cap/state/1";
 const char* controler_name = "esp32-01";
-const char* broker_ip =  "192.168.170.31"; // "192.168.4.254";
-const char* wifi_name = "Alpha-II-239";//"Kaer Morhen";
-const char* wifi_pwd = "51361007935680578489"; //"3Hexerhexen";
+const char* broker_ip =  "192.168.198.254";
+const char* wifi_name = "Kaer Morhen";
+const char* wifi_pwd = "3Hexerhexen";
 double error_correction = 0.10;
 
 EspMQTTClient client(
