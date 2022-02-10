@@ -43,12 +43,10 @@ Mosquitto -c custom_mosquitto.conf
 ```
 
 ## Idea
-The idea is a system that detects the occupancy of workstations passively, so without user interventions.
-
-With this system, users can find free places easily and can check whether a trip to library is even needed.
+The idea behind LibCap is a Library-Capacity-Measurement-System that detects the occupancy of workstations passively, without user interventions. With this system, users can find free places easily and can check whether a trip to a library is even needed.
 
 ## Tools
-In this project where used quite a lot of new (at least for us) and cutting edge technologies. Reaching from database over container to messaging brokers.
+Numerous new state of the art technologies were implemented in the project; ranging from database over containerization to messaging brokers. The following technologies have been used: 
 
 
 
@@ -90,4 +88,4 @@ For a quick demonstration see here: https://youtu.be/ml8fKBpgCN8
 
 ## Documentation and Assignment
 
-The presentation and the assignment is stored within the "Documentation"-Folder. There you can also see the the Live-Demo and the Teaser-Video. 
+The presentation and the assignment as well as the OnePager for the Project-Documentation is stored within the "Docs"-Folder. There you can also see the the Live-Demo and the Teaser-Video and the brand logos.
