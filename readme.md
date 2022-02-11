@@ -43,13 +43,15 @@ Mosquitto -c custom_mosquitto.conf
 ```
 
 ## Idea
-The idea behind LibCap is a Library-Capacity-Measurement-System that detects the occupancy of workstations passively, without user interventions. With this system, users can find free places easily and can check whether a trip to a library is even needed.
+The idea behind LibCap is a Library-Capacity-Measurement-System that detects the occupancy of workstations passively, without user interventions. With this system, visitors can find free places easily and can check whether a trip to a library is worth it.
+
+<img src="./Docs/Presentations/state_diagram.png" alt="Logo" align="center"/>
 
 ## Tools
-Numerous new state of the art technologies were implemented in the project; ranging from database over containerization to messaging brokers. The following technologies have been used: 
+Numerous new state of the art technologies were implemented in this project; ranging from database over containerization to messaging brokers. The following technologies have been used: 
 
 
-
+<div align="center">
 <img src="https://img.shields.io/badge/Postgres-grey?style=flat-square&logo=postgresql"/>
 <img src="https://img.shields.io/badge/Docker-grey?style=flat-square&logo=docker"/>
 <img src="https://img.shields.io/badge/Flask-grey?style=flat-square&logo=flask"/>
@@ -61,7 +63,7 @@ Numerous new state of the art technologies were implemented in the project; rang
 <img src="https://img.shields.io/badge/ESP32-grey?style=flat-square&logo=espHome"/>
 <img src="https://img.shields.io/badge/C++-grey?style=flat-square&logo=c"/>
 <img src="https://img.shields.io/badge/Mosquitto-grey?style=flat-square&logo=Eclipse Mosquitto"/>
-
+</div>
 
 
 ## Team
